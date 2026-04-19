@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" width="900" height="600">
+  <!-- Background -->
+  <rect width="900" height="600" fill="#f0ece4"/>
+
+  <!-- Outer building wall -->
+  <rect x="40" y="40" width="820" height="520" fill="none" stroke="#2d2d2d" stroke-width="6" rx="2"/>
+
+  <!-- Corridor horizontal center -->
+  <rect x="40" y="270" width="820" height="60" fill="#e8e4dc" stroke="#2d2d2d" stroke-width="2"/>
+  <text x="450" y="306" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#666" font-weight="500">MAIN CORRIDOR</text>
+
+  <!-- ── TOP ROW ── -->
+  <!-- Room A1 -->
+  <rect x="40" y="40" width="200" height="230" fill="#fff" stroke="#2d2d2d" stroke-width="2"/>
+  <text x="140" y="148" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#333" font-weight="600">Conference A</text>
+  <text x="140" y="168" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#999">42 m²</text>
+  <!-- door -->
+  <line x1="140" y1="270" x2="140" y2="255" stroke="#2d2d2d" stroke-width="2"/>
+  <path d="M 140 270 A 15 15 0 0 1 155 255" fill="none" stroke="#2d2d2d" stroke-width="1.5"/>
+
+  <!-- Room A2 -->
+  <rect x="240" y="40" width="180" height="230" fill="#fff" stroke="#2d2d2d" stroke-width="2"/>
+  <text x="330" y="148" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#333" font-weight="600">Conference B</text>
+  <text x="330" y="168" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#999">36 m²</text>
+  <line x1="330" y1="270" x2="330" y2="255" stroke="#2d2d2d" stroke-width="2"/>
+  <path d="M 330 270 A 15 15 0 0 1 345 255" fill="none" stroke="#2d2d2d" stroke-width="1.5"/>
+
+  <!-- Room A3 open office -->
+  <rect x="420" y="40" width="220" height="230" fill="#fff" stroke="#2d2d2d" stroke-width="2"/>
+  <text x="530" y="148" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#333" font-weight="600">Open Office</text>
+  <text x="530" y="168" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#999">64 m²</text>
+  <!-- desk symbols -->
+  <rect x="448" y="80" width="28" height="20" rx="2" fill="#e0dbd0" stroke="#bbb" stroke-width="1"/>
+  <rect x="488" y="80" width="28" height="20" rx="2" fill="#e0dbd0" stroke="#bbb" stroke-width="1"/>
+  <rect x="528" y="80" width="28" height="20" rx="2" fill="#e0dbd0" stroke="#bbb" stroke-width="1"/>
+  <rect x="568" y="80" width="28" height="20" rx="2" fill="#e0dbd0" stroke="#bbb" stroke-width="1"/>
+  <rect x="448" y="116" width="28" height="20" rx="2" fill="#e0dbd0" stroke="#bbb" stroke-width="1"/>
+  <rect x="488" y="116" width="28" height="20" rx="2" fill="#e0dbd0" stroke="#bbb" stroke-width="1"/>
+  <rect x="528" y="116" width="28" height="20" rx="2" fill="#e0dbd0" stroke="#bbb" stroke-width="1"/>
+  <rect x="568" y="116" width="28" height="20" rx="2" fill="#e0dbd0" stroke="#bbb" stroke-width="1"/>
+
+  <!-- Room A4 kitchen/break -->
+  <rect x="640" y="40" width="220" height="230" fill="#fff" stroke="#2d2d2d" stroke-width="2"/>
+  <text x="750" y="148" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#333" font-weight="600">Break Room</text>
+  <text x="750" y="168" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#999">28 m²</text>
+  <!-- table circle -->
+  <circle cx="750" cy="110" r="28" fill="#e8e4dc" stroke="#bbb" stroke-width="1.5"/>
+  <circle cx="750" cy="110" r="5" fill="#ccc"/>
+
+  <!-- ── BOTTOM ROW ── -->
+  <!-- Room B1 -->
+  <rect x="40" y="330" width="200" height="230" fill="#fff" stroke="#2d2d2d" stroke-width="2"/>
+  <text x="140" y="438" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#333" font-weight="600">Storage</text>
+  <text x="140" y="458" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#999">18 m²</text>
+  <!-- shelves -->
+  <rect x="60" y="360" width="160" height="12" rx="1" fill="#e0dbd0" stroke="#bbb" stroke-width="1"/>
+  <rect x="60" y="384" width="160" height="12" rx="1" fill="#e0dbd0" stroke="#bbb" stroke-width="1"/>
+  <rect x="60" y="408" width="160" height="12" rx="1" fill="#e0dbd0" stroke="#bbb" stroke-width="1"/>
+
+  <!-- Room B2 -->
+  <rect x="240" y="330" width="180" height="230" fill="#fff" stroke="#2d2d2d" stroke-width="2"/>
+  <text x="330" y="438" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#333" font-weight="600">Meeting Room</text>
+  <text x="330" y="458" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#999">22 m²</text>
+  <rect x="282" y="390" width="96" height="56" rx="3" fill="#e8e4dc" stroke="#bbb" stroke-width="1.5"/>
+
+  <!-- Room B3 -->
+  <rect x="420" y="330" width="220" height="230" fill="#fff" stroke="#2d2d2d" stroke-width="2"/>
+  <text x="530" y="438" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#333" font-weight="600">Focus Zone</text>
+  <text x="530" y="458" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#999">38 m²</text>
+  <rect x="448" y="360" width="28" height="20" rx="2" fill="#e0dbd0" stroke="#bbb" stroke-width="1"/>
+  <rect x="488" y="360" width="28" height="20" rx="2" fill="#e0dbd0" stroke="#bbb" stroke-width="1"/>
+  <rect x="528" y="360" width="28" height="20" rx="2" fill="#e0dbd0" stroke="#bbb" stroke-width="1"/>
+  <rect x="568" y="360" width="28" height="20" rx="2" fill="#e0dbd0" stroke="#bbb" stroke-width="1"/>
+
+  <!-- Room B4 -->
+  <rect x="640" y="330" width="220" height="230" fill="#fff" stroke="#2d2d2d" stroke-width="2"/>
+  <text x="750" y="438" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#333" font-weight="600">Reception</text>
+  <text x="750" y="458" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#999">30 m²</text>
+  <!-- reception desk L-shape -->
+  <rect x="680" y="370" width="80" height="20" rx="2" fill="#e0dbd0" stroke="#bbb" stroke-width="1.5"/>
+  <rect x="680" y="370" width="20" height="50" rx="2" fill="#e0dbd0" stroke="#bbb" stroke-width="1.5"/>
+
+  <!-- compass rose -->
+  <g transform="translate(852,52)">
+    <circle r="14" fill="white" stroke="#ccc" stroke-width="1"/>
+    <text y="4" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#444" font-weight="700">N</text>
+    <line x1="0" y1="-10" x2="0" y2="-5" stroke="#2d2d2d" stroke-width="1.5"/>
+  </g>
+
+  <!-- scale bar -->
+  <line x1="60" y1="575" x2="160" y2="575" stroke="#666" stroke-width="2"/>
+  <line x1="60" y1="570" x2="60" y2="580" stroke="#666" stroke-width="2"/>
+  <line x1="160" y1="570" x2="160" y2="580" stroke="#666" stroke-width="2"/>
+  <text x="110" y="592" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#666">10 m</text>
+
+  <!-- title block -->
+  <text x="450" y="590" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#888">AreaSim — Ground Floor Plan (Mock)</text>
+</svg>
