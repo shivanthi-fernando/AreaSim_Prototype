@@ -11,39 +11,102 @@ import { Logo } from "@/components/ui/Logo";
 function IllustrationWelcome() {
   return (
     <svg viewBox="0 0 320 180" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-      <motion.rect x="30" y="20" width="260" height="145" rx="6"
-        stroke="#1A7FA8" strokeWidth="2.5" fill="#EEF3F8"
-        initial={{ pathLength: 0 }} animate={{ pathLength: 1 }}
-        transition={{ duration: 1, ease: "easeInOut", repeat: Infinity, repeatDelay: 2 }} />
-      {[
-        { d: "M 30 90 L 180 90" },
-        { d: "M 180 20 L 180 90" },
-        { d: "M 180 90 L 180 165" },
-        { d: "M 180 90 L 290 90" },
-      ].map((p, i) => (
-        <motion.path key={i} d={p.d} stroke="#374151" strokeWidth="1.5"
+      {/* ── LEFT: Before AreaSim ── */}
+      {/* Clipboard / paper stack */}
+      <motion.rect x="18" y="28" width="118" height="134" rx="6" fill="#FEF9C3" stroke="#D97706" strokeWidth="1.5"
+        initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.4, delay: 0.1 }} />
+      <motion.rect x="24" y="22" width="106" height="18" rx="4" fill="#F59E0B" stroke="#D97706" strokeWidth="1.5"
+        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} />
+      {/* Clip */}
+      <motion.rect x="64" y="16" width="26" height="14" rx="4" fill="#92400E"
+        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.25 }} />
+      {/* Scribbled lines (manual paperwork) */}
+      {[40, 52, 64, 76, 88, 100, 112].map((y, i) => (
+        <motion.line key={i} x1="28" y1={y} x2={i % 3 === 1 ? "110" : "118"} y2={y}
+          stroke="#D97706" strokeWidth="1.2" strokeLinecap="round" opacity="0.5"
           initial={{ pathLength: 0 }} animate={{ pathLength: 1 }}
-          transition={{ duration: 0.6, delay: 0.8 + i * 0.2, repeat: Infinity, repeatDelay: 3 }} />
+          transition={{ delay: 0.3 + i * 0.06, duration: 0.2 }} />
       ))}
-      {[
-        { x: 95, y: 52, text: "Meeting A" },
-        { x: 230, y: 52, text: "Open Office" },
-        { x: 95, y: 130, text: "Break Room" },
-        { x: 230, y: 130, text: "Focus" },
-      ].map((l, i) => (
-        <motion.text key={i} x={l.x} y={l.y} textAnchor="middle" fontSize="10"
-          fill="#1A7FA8" fontWeight="600"
-          initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-          transition={{ delay: 1.6 + i * 0.18, duration: 0.4, repeat: Infinity, repeatDelay: 2 }}>
-          {l.text}
+      {/* Small table grid (manual floor plan) */}
+      <motion.rect x="28" y="120" width="90" height="36" rx="3" fill="white" stroke="#D97706" strokeWidth="1"
+        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }} />
+      <motion.path d="M73,120 L73,156 M28,138 L118,138" stroke="#D97706" strokeWidth="0.8"
+        initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ delay: 0.8, duration: 0.3 }} />
+      {/* Clock */}
+      <motion.circle cx="112" cy="44" r="14" fill="white" stroke="#DC2626" strokeWidth="1.5"
+        initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.5, type: "spring" }}
+        style={{ transformOrigin: "112px 44px" }} />
+      <motion.path d="M112,35 L112,44 L118,48" stroke="#DC2626" strokeWidth="1.5" strokeLinecap="round"
+        initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ delay: 0.7, duration: 0.3 }} />
+      {/* "SLOW" label */}
+      <motion.rect x="30" y="162" width="90" height="14" rx="7" fill="#FEE2E2"
+        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.9 }} />
+      <motion.text x="75" y="172" textAnchor="middle" fontSize="8" fill="#DC2626" fontWeight="700"
+        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }}>
+        Manual &amp; Time-Consuming
+      </motion.text>
+
+      {/* ── CENTRE divider with arrow ── */}
+      <motion.line x1="160" y1="20" x2="160" y2="170" stroke="#E5E7EB" strokeWidth="1.5" strokeDasharray="5 4"
+        initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ delay: 0.4, duration: 0.5 }} />
+      <motion.g initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.85, type: "spring", stiffness: 260 }}
+        style={{ transformOrigin: "160px 95px" }}>
+        <circle cx="160" cy="95" r="14" fill="#0A4F6E" />
+        <path d="M154,95 L160,89 L166,95 M160,89 L160,103" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      </motion.g>
+
+      {/* ── RIGHT: After AreaSim ── */}
+      {/* Laptop screen */}
+      <motion.rect x="184" y="28" width="118" height="100" rx="6" fill="#EFF8FF" stroke="#1A7FA8" strokeWidth="1.5"
+        initial={{ opacity: 0, x: 12 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.4, delay: 0.1 }} />
+      {/* Screen content: mini AreaSim UI */}
+      <motion.rect x="190" y="34" width="106" height="16" rx="3" fill="#0A4F6E"
+        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }} />
+      <motion.text x="243" y="45" textAnchor="middle" fontSize="7.5" fill="white" fontWeight="700"
+        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}>AreaSim Canvas</motion.text>
+      {/* Floor plan auto-drawn */}
+      <motion.rect x="192" y="54" width="70" height="70" rx="3" fill="#DBEAFE" stroke="#1A7FA8" strokeWidth="1"
+        initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.5, type: "spring" }} style={{ transformOrigin: "227px 89px" }} />
+      {[{ d: "M192,89 L262,89" }, { d: "M227,54 L227,124" }].map((p, i) => (
+        <motion.path key={i} d={p.d} stroke="#1A7FA8" strokeWidth="1" fill="none"
+          initial={{ pathLength: 0 }} animate={{ pathLength: 1 }}
+          transition={{ delay: 0.65 + i * 0.15, duration: 0.3 }} />
+      ))}
+      {/* Room labels */}
+      {[{ x: 209, y: 75, t: "Meet" }, { x: 245, y: 75, t: "Work" },
+        { x: 209, y: 108, t: "Break" }, { x: 245, y: 108, t: "Focus" }].map((r, i) => (
+        <motion.text key={i} x={r.x} y={r.y} textAnchor="middle" fontSize="6.5" fill="#1A7FA8" fontWeight="600"
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 + i * 0.06 }}>
+          {r.t}
         </motion.text>
       ))}
-      {[{ x: 60, y: 30 }, { x: 270, y: 25 }, { x: 155, y: 155 }].map((s, i) => (
-        <motion.g key={i}
-          animate={{ scale: [0, 1.2, 0], rotate: [0, 180, 360] }}
-          transition={{ duration: 1.5, delay: 2 + i * 0.3, repeat: Infinity, repeatDelay: 2 }}
-          style={{ transformOrigin: `${s.x}px ${s.y}px` }}>
-          <Sparkles size={14} color="#00C9A7" x={s.x - 7} y={s.y - 7} />
+      {/* Stats panel on right */}
+      <motion.rect x="268" y="54" width="28" height="70" rx="3" fill="white" stroke="#D0DDE6" strokeWidth="0.8"
+        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }} />
+      {[{ y: 62, val: "12", lbl: "Rooms" }, { y: 84, val: "4", lbl: "Zones" }, { y: 106, val: "96", lbl: "Score" }].map((s, i) => (
+        <motion.g key={i} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.85 + i * 0.1 }}>
+          <text x="282" y={s.y} textAnchor="middle" fontSize="7.5" fill="#0A4F6E" fontWeight="800">{s.val}</text>
+          <text x="282" y={s.y + 9} textAnchor="middle" fontSize="5.5" fill="#94A3B8">{s.lbl}</text>
+        </motion.g>
+      ))}
+      {/* Laptop base */}
+      <motion.path d="M182,128 L186,136 L300,136 L302,128" fill="#CBD5E1" stroke="#94A3B8" strokeWidth="1"
+        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} />
+      {/* "FAST" label with check */}
+      <motion.rect x="184" y="142" width="118" height="14" rx="7" fill="#D1FAE5"
+        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.9 }} />
+      <motion.text x="243" y="152" textAnchor="middle" fontSize="8" fill="#15803D" fontWeight="700"
+        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }}>
+        ✓ Fast &amp; Data-Driven
+      </motion.text>
+      {/* Celebration sparkle on right */}
+      {[{ x: 296, y: 30 }, { x: 184, y: 22 }, { x: 310, y: 140 }].map((s, i) => (
+        <motion.g key={i} style={{ transformOrigin: `${s.x}px ${s.y}px` }}
+          animate={{ rotate: [0, 20, -10, 0], opacity: [0.4, 1, 0.4], scale: [0.7, 1.2, 0.7] }}
+          transition={{ duration: 2.5 + i * 0.5, repeat: Infinity, delay: 1 + i * 0.4 }}>
+          <text x={s.x} y={s.y} textAnchor="middle" fontSize="10" fill="#00C9A7">✦</text>
         </motion.g>
       ))}
     </svg>
@@ -300,8 +363,8 @@ interface GuideStep {
 const steps: GuideStep[] = [
   {
     id: 1,
-    title: "Welcome to Your Canvas!",
-    description: "Let's take a quick 2-minute tour of the floor plan editor. You'll learn how to mark rooms, group zones, and start counting — the core of AreaSim's workspace analysis.",
+    title: "You're in the right place to optimise your workspace",
+    description: "Before AreaSim, workspace analysis meant stacks of paper, manual counting, and hours of spreadsheet work. With AreaSim you map rooms digitally in minutes, count occupants accurately, and get actionable insights — all in one fast, satisfying webapp.",
     illustration: <IllustrationWelcome />,
     illustrationBg: "bg-gradient-to-br from-[#EEF3F8] to-[#E0ECF5]",
   },
@@ -332,27 +395,6 @@ const steps: GuideStep[] = [
     description: "A single room can also be its own zone. Use the Zone Draw tool to mark a standalone area — ideal for reception desks, server rooms, or any space that stands alone.",
     illustration: <IllustrationSingleZone />,
     illustrationBg: "bg-gradient-to-br from-violet-50 to-purple-50",
-  },
-  {
-    id: 6,
-    title: "Detailed View Panel",
-    description: "Click 'Detailed View' in the top bar to open a tree of all your floors, zones, and rooms. You can see completion status at a glance and jump to any room on the canvas.",
-    illustration: <IllustrationDetailPanel />,
-    illustrationBg: "bg-gradient-to-br from-slate-50 to-gray-100",
-  },
-  {
-    id: 7,
-    title: "Your Progress Score",
-    description: "The score widget in the top bar tracks rooms identified, zones created, and survey responses collected. Hit milestones to unlock celebrations.",
-    illustration: <IllustrationScore />,
-    illustrationBg: "bg-gradient-to-br from-amber-50 to-orange-50",
-  },
-  {
-    id: 8,
-    title: "You're Ready to Start!",
-    description: "That's everything! Head into the canvas, mark your first room, and let AreaSim's intelligence do the rest. Your workspace analysis begins now.",
-    illustration: <IllustrationReady />,
-    illustrationBg: "bg-gradient-to-br from-green-50 to-teal-50",
   },
 ];
 

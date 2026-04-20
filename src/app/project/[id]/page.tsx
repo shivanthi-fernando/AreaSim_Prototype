@@ -178,10 +178,9 @@ function FloorsTab() {
 // ─── Team tab ─────────────────────────────────────────────────────────────────
 function TeamTab() {
   const ROLE_COLORS: Record<string, string> = {
-    Owner:          "bg-primary/10 text-primary",
-    Editor:         "bg-accent/10 text-accent",
-    Viewer:         "bg-border text-text-muted",
-    "Data Collector": "bg-amber-500/10 text-amber-600",
+    Admin:    "bg-primary/10 text-primary",
+    Analyst:  "bg-accent/10 text-accent",
+    Observer: "bg-amber-500/10 text-amber-600",
   };
 
   if (mockTeamMembers.length === 0) {

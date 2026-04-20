@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   X, Plus, CheckCircle2, Loader2, Circle,
   Pencil, Play, ChevronRight, Sparkles,
@@ -300,30 +300,106 @@ function RoomRow({
   count: number;
   onCount: () => void;
 }) {
+  const [expanded, setExpanded] = useState(false);
+
+  // Deterministic mock stats based on name hash
+  const hash = name.split("").reduce((acc, c) => acc + c.charCodeAt(0), 0);
+  const roomTypes = ["Meeting Room", "Open Office", "Break Room", "Focus Room", "Reception", "Storage"];
+  const roomType = roomTypes[hash % roomTypes.length];
+  const seats = 2 + (hash % 12);
+  const todayCount = 1 + (hash % 4);
+  const totalCount = todayCount + (hash % 10) + 2;
+  const avgCapacity = Math.round(seats * (0.5 + (hash % 4) * 0.1));
+
   return (
-    <div className="flex items-center justify-between px-3 py-2.5 border-b border-[#F0F4F8] last:border-0 bg-white hover:bg-[#F7F9FC] transition-colors group">
-      <div className="flex items-center gap-2 min-w-0">
-        {STATUS_ICON[status]}
-        <span className="text-xs text-[#374151] font-body truncate">{name}</span>
-        {status === "counted" && (
-          <span className="text-[10px] font-mono font-bold text-accent ml-1"
-            style={{ fontFamily: "var(--font-jetbrains-mono)" }}>
-            {count}
-          </span>
-        )}
+    <div className="border-b border-[#F0F4F8] last:border-0 bg-white hover:bg-[#F7F9FC] transition-colors">
+      <div className="flex items-center justify-between px-3 py-2.5 group">
+        <button
+          onClick={() => status === "counted" && setExpanded(!expanded)}
+          className="flex items-center gap-2 min-w-0 flex-1 text-left"
+        >
+          {STATUS_ICON[status]}
+          <span className="text-xs text-[#374151] font-body truncate">{name}</span>
+          {status === "counted" && (
+            <span className="text-[10px] font-mono font-bold text-accent ml-1"
+              style={{ fontFamily: "var(--font-jetbrains-mono)" }}>
+              {count}
+            </span>
+          )}
+          {status === "counted" && (
+            <ChevronRight
+              size={11}
+              className={`text-[#C0D0DC] ml-auto mr-1 transition-transform shrink-0 ${expanded ? "rotate-90" : ""}`}
+            />
+          )}
+        </button>
+        <button
+          onClick={onCount}
+          title="Start counting"
+          className={`shrink-0 flex items-center gap-1 px-2 py-1 rounded-lg text-[10px] font-semibold transition-all ${
+            status === "counted"
+              ? "bg-accent/10 text-accent"
+              : "bg-[#F0F6FB] text-[#5C7A8A] hover:bg-primary hover:text-white"
+          }`}
+        >
+          <Play size={9} className="fill-current" />
+          {status === "counted" ? "Recount" : "Count"}
+        </button>
       </div>
-      <button
-        onClick={onCount}
-        title="Start counting"
-        className={`shrink-0 flex items-center gap-1 px-2 py-1 rounded-lg text-[10px] font-semibold transition-all ${
-          status === "counted"
-            ? "bg-accent/10 text-accent"
-            : "bg-[#F0F6FB] text-[#5C7A8A] hover:bg-primary hover:text-white"
-        }`}
-      >
-        <Play size={9} className="fill-current" />
-        {status === "counted" ? "Recount" : "Count"}
-      </button>
+
+      {/* Stats card — shown when counted and expanded */}
+      <AnimatePresence>
+        {status === "counted" && expanded && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
+            className="overflow-hidden"
+          >
+            <div className="mx-3 mb-2.5 rounded-xl bg-[#F0F6FB] border border-[#DAEAF5] p-3 space-y-2">
+              {/* Room type */}
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] text-[#8CA3B0] font-body">Type</span>
+                <span className="text-[10px] font-semibold text-[#0D1B2A] bg-[#DBEAFE] text-primary px-2 py-0.5 rounded-full font-body">{roomType}</span>
+              </div>
+              {/* Seats */}
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] text-[#8CA3B0] font-body">Seats</span>
+                <span className="text-[10px] font-bold text-[#374151] font-mono" style={{ fontFamily: "var(--font-jetbrains-mono)" }}>{seats}</span>
+              </div>
+              {/* Count divider */}
+              <div className="h-px bg-[#DAEAF5]" />
+              {/* Today / total counts */}
+              <div className="grid grid-cols-2 gap-2">
+                <div className="rounded-lg bg-white border border-[#E5EAF0] p-2 text-center">
+                  <p className="text-[13px] font-extrabold text-[#1A7FA8]" style={{ fontFamily: "var(--font-jetbrains-mono)" }}>{todayCount}×</p>
+                  <p className="text-[9px] text-[#8CA3B0] font-body">Today</p>
+                </div>
+                <div className="rounded-lg bg-white border border-[#E5EAF0] p-2 text-center">
+                  <p className="text-[13px] font-extrabold text-[#0A4F6E]" style={{ fontFamily: "var(--font-jetbrains-mono)" }}>{totalCount}×</p>
+                  <p className="text-[9px] text-[#8CA3B0] font-body">Overall</p>
+                </div>
+              </div>
+              {/* Avg capacity */}
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] text-[#8CA3B0] font-body">Avg capacity</span>
+                <div className="flex items-center gap-1.5">
+                  <div className="w-20 h-1.5 rounded-full bg-[#E5EAF0] overflow-hidden">
+                    <motion.div
+                      className="h-full rounded-full bg-gradient-to-r from-[#1A7FA8] to-[#00C9A7]"
+                      initial={{ width: 0 }}
+                      animate={{ width: `${Math.round((avgCapacity / seats) * 100)}%` }}
+                      transition={{ delay: 0.1, duration: 0.5, ease: "easeOut" }}
+                    />
+                  </div>
+                  <span className="text-[10px] font-bold text-[#374151] font-mono" style={{ fontFamily: "var(--font-jetbrains-mono)" }}>{avgCapacity}</span>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

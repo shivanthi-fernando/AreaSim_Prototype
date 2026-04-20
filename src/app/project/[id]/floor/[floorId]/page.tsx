@@ -102,6 +102,7 @@ export default function FloorPage() {
             size="sm"
             icon={<SlidersHorizontal size={14} />}
             onClick={() => setDetailPanel(!detailPanelOpen)}
+            className="border-primary text-primary hover:bg-primary/5"
           >
             <span className="hidden sm:inline">Detailed View</span>
           </Button>
@@ -111,6 +112,7 @@ export default function FloorPage() {
             size="sm"
             icon={<ClipboardList size={14} />}
             onClick={() => setSurveyModal(true)}
+            className="border-primary text-primary hover:bg-primary/5"
           >
             <span className="hidden sm:inline">Conduct Survey</span>
           </Button>

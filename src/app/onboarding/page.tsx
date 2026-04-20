@@ -34,11 +34,9 @@ const stepMeta: Record<number, { title: string; subtitle: string; illuBg: string
 function IlluStep1() {
   return (
     <svg viewBox="0 0 300 260" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full max-h-60">
-      {/* Building silhouette */}
       <motion.rect x="85" y="70" width="130" height="140" rx="6" fill="white" stroke="#CBD5E1" strokeWidth="2"
         initial={{ scaleY: 0 }} animate={{ scaleY: 1 }} transition={{ duration: 0.5, delay: 0.1 }}
         style={{ transformOrigin: "150px 210px" }} />
-      {/* Windows */}
       {[{ x: 100, y: 90 }, { x: 135, y: 90 }, { x: 170, y: 90 },
         { x: 100, y: 125 }, { x: 135, y: 125 }, { x: 170, y: 125 },
         { x: 100, y: 160 }, { x: 135, y: 160 }, { x: 170, y: 160 }].map((w, i) => (
@@ -47,13 +45,10 @@ function IlluStep1() {
           initial={{ opacity: 0 }} animate={{ opacity: 1 }}
           transition={{ delay: 0.4 + i * 0.05 }} />
       ))}
-      {/* Door */}
       <motion.rect x="133" y="180" width="34" height="30" rx="3" fill="#E2E8F0" stroke="#CBD5E1" strokeWidth="1.5"
         initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.9 }} />
-      {/* Roof triangle */}
       <motion.path d="M 75 72 L 150 28 L 225 72" stroke="#1A7FA8" strokeWidth="2.5" fill="none" strokeLinejoin="round"
         initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.6 }} />
-      {/* Name badge */}
       <motion.rect x="60" y="12" width="180" height="24" rx="12" fill="#0A4F6E"
         initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.8, type: "spring" }} style={{ transformOrigin: "150px 24px" }} />
@@ -61,10 +56,8 @@ function IlluStep1() {
         initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }}>
         Aker Brygge Tower
       </motion.text>
-      {/* Location pin */}
       <motion.g initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1 }}>
         <circle cx="150" cy="234" r="10" fill="#00C9A7" />
-        <text x="150" y="237.5" textAnchor="middle" fontSize="12">📍</text>
         <text x="150" y="252" textAnchor="middle" fontSize="8.5" fill="#64748B">Oslo, Norway</text>
       </motion.g>
     </svg>
@@ -79,32 +72,25 @@ function IlluStep2() {
         <motion.g key={i}
           initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}
           transition={{ delay: i * 0.18 + 0.1 }}>
-          {/* Floor slab */}
           <rect x="50" y={185 - i * 56} width="200" height="44" rx="6"
             fill="white" stroke="#CBD5E1" strokeWidth="1.5" />
-          {/* Level indicator */}
           <rect x="56" y={190 - i * 56} width="26" height="14" rx="7"
             fill={["#DBEAFE", "#EDE9FE", "#DCFCE7"][i]} />
           <text x="69" y={200 - i * 56} textAnchor="middle" fontSize="7.5"
             fill={["#1D4ED8", "#7C3AED", "#15803D"][i]} fontWeight="700">
             {["G", "1F", "2F"][i]}
           </text>
-          {/* Floor name */}
           <text x="95" y={200 - i * 56} fontSize="9.5" fill="#374151" fontWeight="600">{name}</text>
-          {/* Mini floor plan squiggle */}
           {[120, 145, 165, 185, 205].map((x, j) => (
             <rect key={j} x={x} y={192 - i * 56} width={16} height={10} rx="2"
               fill={["#EFF6FF", "#F5F3FF", "#F0FDF4"][i]} stroke="#E2E8F0" strokeWidth="0.8" />
           ))}
         </motion.g>
       ))}
-      {/* Vertical connector */}
       <motion.line x1="150" y1="73" x2="150" y2="182" stroke="#CBD5E1" strokeWidth="1.5" strokeDasharray="4 3"
         initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ delay: 0.6, duration: 0.5 }} />
-      {/* Plus badge */}
       <motion.rect x="118" y="220" width="64" height="20" rx="10" fill="#1A7FA8"
-        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }}>
-      </motion.rect>
+        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }} />
       <motion.text x="150" y="233" textAnchor="middle" fontSize="8.5" fill="white" fontWeight="600"
         initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }}>
         + Add floors
@@ -116,19 +102,16 @@ function IlluStep2() {
 function IlluStep3() {
   return (
     <svg viewBox="0 0 300 260" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full max-h-60">
-      {/* Dashboard card */}
       <rect x="30" y="30" width="240" height="195" rx="12" fill="white" stroke="#E2E8F0" strokeWidth="1.5"
         style={{ filter: "drop-shadow(0 4px 16px rgba(0,0,0,0.06))" }} />
-      {/* Header bar */}
       <rect x="30" y="30" width="240" height="32" rx="12" fill="#F8FAFC" />
       <rect x="30" y="50" width="240" height="12" fill="#F8FAFC" />
       <text x="46" y="50" fontSize="9" fill="#94A3B8" fontWeight="600">LEASE OVERVIEW</text>
-      {/* Metric rows */}
       {[
-        { label: "Annual Rent",    value: "NOK 2,500,000", color: "#DBEAFE", text: "#1D4ED8", y: 75 },
-        { label: "Total Area",     value: "10,000 SqFt",   color: "#DCFCE7", text: "#15803D", y: 113 },
-        { label: "Common Area",    value: "NOK 400,000",   color: "#FEF9C3", text: "#854D0E", y: 151 },
-        { label: "Headcount",      value: "120 people",    color: "#F3E8FF", text: "#7E22CE", y: 189 },
+        { label: "Annual Rent",  value: "NOK 2,500,000", color: "#DBEAFE", text: "#1D4ED8", y: 75 },
+        { label: "Total Area",   value: "10,000 SqFt",   color: "#DCFCE7", text: "#15803D", y: 113 },
+        { label: "Common Area",  value: "NOK 400,000",   color: "#FEF9C3", text: "#854D0E", y: 151 },
+        { label: "Headcount",    value: "120 people",    color: "#F3E8FF", text: "#7E22CE", y: 189 },
       ].map((m, i) => (
         <motion.g key={i} initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.2 + i * 0.12 }}>
@@ -137,7 +120,6 @@ function IlluStep3() {
           <text x="248" y={m.y + 18} textAnchor="end" fontSize="9.5" fill={m.text} fontWeight="700">{m.value}</text>
         </motion.g>
       ))}
-      {/* Animated bar at bottom */}
       <motion.rect x="44" y="225" width="0" height="6" rx="3" fill="url(#leaseGrad)"
         animate={{ width: 180 }} transition={{ delay: 0.8, duration: 1, ease: "easeOut" }} />
       <defs>
@@ -152,15 +134,12 @@ function IlluStep3() {
 function IlluStep4() {
   return (
     <svg viewBox="0 0 300 260" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full max-h-60">
-      {/* Upload area */}
       <motion.rect x="50" y="30" width="200" height="140" rx="12"
         fill="white" stroke="#CBD5E1" strokeWidth="2" strokeDasharray="6 4"
         initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} />
-      {/* Floor plan inside */}
       <motion.rect x="70" y="50" width="160" height="100" rx="6" fill="#EFF6FF"
         initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.3, type: "spring" }} style={{ transformOrigin: "150px 100px" }} />
-      {/* Room lines */}
       {[
         { d: "M 90 70 L 190 70 L 190 140 L 90 140 Z" },
         { d: "M 130 70 L 130 140" },
@@ -170,14 +149,11 @@ function IlluStep4() {
           initial={{ pathLength: 0 }} animate={{ pathLength: 1 }}
           transition={{ delay: 0.5 + i * 0.2, duration: 0.4 }} />
       ))}
-      {/* AI scan beam */}
       <motion.rect x="70" y="50" width="160" height="4" rx="2" fill="#00C9A7" opacity="0.7"
         animate={{ y: [50, 144, 50] }}
         transition={{ duration: 2, repeat: Infinity, ease: "linear" }} />
-      {/* Upload arrow + label */}
       <motion.g initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
         <circle cx="150" cy="190" r="18" fill="#EFF6FF" stroke="#BFDBFE" strokeWidth="1.5" />
-        <text x="150" y="196" textAnchor="middle" fontSize="16">📤</text>
       </motion.g>
       <motion.text x="150" y="222" textAnchor="middle" fontSize="10" fill="#374151" fontWeight="600"
         initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>
@@ -187,7 +163,6 @@ function IlluStep4() {
         initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}>
         PNG · JPG · SVG · PDF supported
       </motion.text>
-      {/* AI badge */}
       <motion.rect x="108" y="244" width="84" height="14" rx="7" fill="#0A4F6E"
         initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.9 }} />
       <motion.text x="150" y="254" textAnchor="middle" fontSize="7.5" fill="white" fontWeight="600"
@@ -200,9 +175,9 @@ function IlluStep4() {
 
 function IlluStep5() {
   const rooms = [
-    { name: "Conference A", x: 70, y: 55, w: 80, h: 55, verified: true },
-    { name: "Open Office",  x: 158, y: 55, w: 80, h: 55, verified: true },
-    { name: "Break Room",   x: 70, y: 118, w: 80, h: 55, verified: false },
+    { name: "Conference A", x: 70,  y: 55,  w: 80, h: 55, verified: true },
+    { name: "Open Office",  x: 158, y: 55,  w: 80, h: 55, verified: true },
+    { name: "Break Room",   x: 70,  y: 118, w: 80, h: 55, verified: false },
     { name: "Reception",    x: 158, y: 118, w: 80, h: 55, verified: false },
   ];
   return (
@@ -222,14 +197,10 @@ function IlluStep5() {
               <text x={r.x + r.w - 12} y={r.y + 15.5} textAnchor="middle" fontSize="9" fill="white">✓</text>
             </motion.g>
           )}
-          {!r.verified && (
-            <circle cx={r.x + r.w - 12} cy={r.y + 12} r="8" fill="#E2E8F0" />
-          )}
+          {!r.verified && <circle cx={r.x + r.w - 12} cy={r.y + 12} r="8" fill="#E2E8F0" />}
         </motion.g>
       ))}
-      {/* Divider */}
       <line x1="70" y1="108" x2="238" y2="108" stroke="#E2E8F0" strokeWidth="1" strokeDasharray="3 3" />
-      {/* Legend */}
       <motion.g initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.9 }}>
         <circle cx="84" cy="195" r="6" fill="#22C55E" />
         <text x="93" y="199" fontSize="8.5" fill="#374151">Verified from floor plan</text>
@@ -243,15 +214,14 @@ function IlluStep5() {
 function IlluStep6() {
   return (
     <svg viewBox="0 0 300 260" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full max-h-60">
-      {/* Confetti */}
       {[
-        { x: 60, y: 50, color: "#60A5FA", size: 8 },
-        { x: 100, y: 35, color: "#34D399", size: 6 },
-        { x: 180, y: 40, color: "#F59E0B", size: 7 },
-        { x: 230, y: 60, color: "#A78BFA", size: 9 },
+        { x: 60,  y: 50,  color: "#60A5FA", size: 8 },
+        { x: 100, y: 35,  color: "#34D399", size: 6 },
+        { x: 180, y: 40,  color: "#F59E0B", size: 7 },
+        { x: 230, y: 60,  color: "#A78BFA", size: 9 },
         { x: 240, y: 120, color: "#F472B6", size: 6 },
-        { x: 55, y: 140, color: "#34D399", size: 8 },
-        { x: 80, y: 200, color: "#60A5FA", size: 5 },
+        { x: 55,  y: 140, color: "#34D399", size: 8 },
+        { x: 80,  y: 200, color: "#60A5FA", size: 5 },
         { x: 210, y: 200, color: "#F59E0B", size: 7 },
         { x: 250, y: 170, color: "#A78BFA", size: 6 },
       ].map((p, i) => (
@@ -259,13 +229,10 @@ function IlluStep6() {
           animate={{ y: [p.y, p.y + 12, p.y], rotate: [0, 180, 360], opacity: [0.5, 1, 0.5] }}
           transition={{ duration: 2 + i * 0.3, repeat: Infinity, delay: i * 0.15 }} />
       ))}
-      {/* Central badge */}
       <motion.circle cx="150" cy="120" r="60" fill="white" stroke="#D1FAE5" strokeWidth="2.5"
         style={{ filter: "drop-shadow(0 8px 24px rgba(0,201,167,0.2))" }}
         animate={{ scale: [1, 1.03, 1] }} transition={{ duration: 2, repeat: Infinity }} />
-      <text x="150" y="115" textAnchor="middle" fontSize="38">🎉</text>
       <text x="150" y="145" textAnchor="middle" fontSize="11" fill="#0D1B2A" fontWeight="800">Setup Complete!</text>
-      {/* Steps */}
       {["Map Rooms", "Count Occupants", "Analyse & Report"].map((s, i) => (
         <motion.g key={i} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.5 + i * 0.18 }}>

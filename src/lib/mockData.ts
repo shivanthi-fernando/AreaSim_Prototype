@@ -156,7 +156,9 @@ export interface TeamMember {
   id: string;
   name: string;
   email: string;
-  role: string;
+  role: "Admin" | "Analyst" | "Observer";
+  avatar: string;
+  status: "active" | "pending";
   joinedAt: string;
 }
 
@@ -209,10 +211,11 @@ export const mockUser: User = {
 };
 
 export const mockTeamMembers: TeamMember[] = [
-  { id: "tm-1", name: "Ingrid Hansen",   email: "ingrid@oslo-health.no",  role: "Owner",             joinedAt: "Jan 2024" },
-  { id: "tm-2", name: "Mikkel Thorsen",  email: "mikkel@oslo-health.no",  role: "Editor",            joinedAt: "Mar 2024" },
-  { id: "tm-3", name: "Sara Lindqvist",  email: "sara@oslo-health.no",    role: "Viewer",            joinedAt: "Apr 2024" },
-  { id: "tm-4", name: "John Kristiansen",email: "john@oslo-health.no",    role: "Data Collector",    joinedAt: "May 2024" },
+  { id: "tm-1", name: "Ingrid Hansen",    email: "ingrid@oslo-health.no",  role: "Admin",    avatar: "IH", status: "active",  joinedAt: "Jan 2024" },
+  { id: "tm-2", name: "Mikkel Thorsen",   email: "mikkel@oslo-health.no",  role: "Analyst",  avatar: "MT", status: "active",  joinedAt: "Mar 2024" },
+  { id: "tm-3", name: "Sara Lindqvist",   email: "sara@oslo-health.no",    role: "Observer", avatar: "SL", status: "active",  joinedAt: "Apr 2024" },
+  { id: "tm-4", name: "John Kristiansen", email: "john@oslo-health.no",    role: "Analyst",  avatar: "JK", status: "active",  joinedAt: "May 2024" },
+  { id: "tm-5", name: "Astrid Nygaard",   email: "astrid@oslo-health.no",  role: "Observer", avatar: "AN", status: "pending", joinedAt: "Jun 2024" },
 ];
 
 export const mockActivity: ActivityItem[] = [
