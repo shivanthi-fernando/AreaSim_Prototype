@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { motion } from "framer-motion";
-import { Minus, Plus, ArrowRight, ArrowLeft } from "lucide-react";
+import { ArrowRight, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { useOnboardingStore, LeaseParams } from "@/store/onboarding";
 
@@ -42,11 +42,6 @@ export function Step3Lease({ onNext, onBack }: Props) {
   });
 
   const headcount = watch("targetHeadcount");
-
-  const adjust = (delta: number) => {
-    const next = Math.max(1, (headcount || 1) + delta);
-    setValue("targetHeadcount", next);
-  };
 
   const onSubmit = (data: FormValues) => {
     setLeaseParams(data as LeaseParams);
@@ -118,32 +113,24 @@ export function Step3Lease({ onNext, onBack }: Props) {
         </div>
       </motion.div>
 
-      {/* Headcount stepper */}
+      {/* Headcount input */}
       <motion.div variants={item}>
         <div className="flex flex-col gap-1.5">
           <label className="text-sm font-medium text-text font-body">Target Headcount</label>
-          <div className="flex items-center gap-3">
-            <button
-              type="button"
-              onClick={() => adjust(-1)}
-              className="w-10 h-10 rounded-xl border border-border bg-surface flex items-center justify-center text-text hover:bg-surface-2 transition-colors"
-            >
-              <Minus size={16} />
-            </button>
-            <div className="flex-1 rounded-[10px] border border-border bg-surface py-2.5 text-center">
-              <span className="text-lg font-semibold text-text font-mono" style={{ fontFamily: "var(--font-jetbrains-mono)" }}>
-                {headcount || 1}
-              </span>
-              <span className="text-sm text-text-muted font-body ml-2">people</span>
-            </div>
-            <button
-              type="button"
-              onClick={() => adjust(1)}
-              className="w-10 h-10 rounded-xl border border-border bg-surface flex items-center justify-center text-text hover:bg-surface-2 transition-colors"
-            >
-              <Plus size={16} />
-            </button>
+          <div className="relative">
+            <input
+              type="number"
+              min={1}
+              placeholder="e.g. 50"
+              className="w-full rounded-[10px] border border-border bg-surface px-4 py-2.5 pr-16 text-sm text-text font-body placeholder:text-text-muted/60 transition-all duration-200 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+              value={headcount || ""}
+              onChange={(e) => setValue("targetHeadcount", Math.max(1, parseInt(e.target.value) || 1))}
+            />
+            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-text-muted font-body pointer-events-none">
+              people
+            </span>
           </div>
+          {errors.targetHeadcount && <p className="text-xs text-accent-warm font-body">{errors.targetHeadcount.message}</p>}
         </div>
       </motion.div>
 

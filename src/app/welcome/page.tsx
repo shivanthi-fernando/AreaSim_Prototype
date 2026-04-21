@@ -277,7 +277,7 @@ export default function WelcomePage() {
             className="w-12 h-12 rounded-full bg-[#0A4F6E] flex items-center justify-center shadow-lg shrink-0"
           >
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path d="M10 16V4M4 10L10 4L16 10" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M4 10h12M10 4l6 6-6 6" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </motion.div>
           <div className="flex-1 w-px bg-gradient-to-b from-transparent via-[#CBD5E1] to-transparent" />
@@ -293,7 +293,7 @@ export default function WelcomePage() {
             className="w-10 h-10 rounded-full bg-[#0A4F6E] flex items-center justify-center shadow-lg shrink-0"
           >
             <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
-              <path d="M10 16V4M4 10L10 4L16 10" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M4 10h12M10 4l6 6-6 6" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </motion.div>
           <div className="flex-1 h-px bg-[#CBD5E1]" />

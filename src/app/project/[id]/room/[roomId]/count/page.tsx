@@ -565,102 +565,63 @@ function CountScreen({
 
       <div className="flex-1 max-w-5xl mx-auto w-full px-4 py-5 space-y-4">
 
-        {/* Top section — two-column card */}
+        {/* Main card — full width, vertical layout */}
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           className="rounded-3xl border border-[#E5EAF0] shadow-sm overflow-hidden bg-white"
         >
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 divide-y lg:divide-y-0 lg:divide-x divide-[#F0F4F8]">
+          {/* Top section — Current Occupant Count */}
+          <div className="p-5 border-b border-[#F0F4F8]">
+            <p className="text-xs font-semibold uppercase tracking-widest text-[#8CA3B0] text-center mb-4">Current Occupant Count</p>
 
-            {/* Left half — Dynamic Room View */}
-            <div className="p-5">
-              <div className="flex items-center justify-between mb-3">
-                <div>
-                  <p className="text-sm font-semibold text-[#0D1B2A]">{roomName}</p>
-                  <p className="text-xs text-[#8CA3B0] mt-0.5">Configured for {seats} seats · {catDef.label}</p>
-                </div>
-                <div className={`text-3xl font-black text-[#0D1B2A] tabular-nums`} style={{ fontFamily: "var(--font-manrope)" }}>
-                  <AnimatePresence mode="popLayout">
-                    <motion.span
-                      key={count}
-                      initial={{ opacity: 0, scale: 0.8, y: -8 }}
-                      animate={{ opacity: 1, scale: 1, y: 0 }}
-                      exit={{ opacity: 0, scale: 0.7, y: 8 }}
-                      transition={{ duration: 0.18, type: "spring", stiffness: 300 }}
-                      className="block"
-                    >
-                      {String(count).padStart(2, "0")}
-                    </motion.span>
-                  </AnimatePresence>
-                </div>
+            {isLocked ? (
+              <div className="rounded-2xl border border-[#E5EAF0] bg-[#F7F9FC] p-5 text-center max-w-sm mx-auto">
+                <Lock size={20} className="text-[#A0B3BE] mx-auto mb-2" />
+                <p className="text-sm font-semibold text-[#5C7A8A] mb-0.5">Max counts reached today</p>
+                <p className="text-xs text-[#8CA3B0]">You&apos;ve counted {MAX_COUNTS_PER_DAY}× today. Come back tomorrow.</p>
               </div>
-              {/* Visualization with count overlay */}
-              <div className="relative h-56">
-                <DynamicRoomView category={category} seats={seats} />
-                {count > 0 && (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full px-4 py-1.5 text-xs font-semibold shadow-md text-white"
-                    style={{ background: "linear-gradient(135deg, #0A4F6E, #1A7FA8)" }}
+            ) : (
+              <>
+                <div className="flex items-center gap-4 mb-5 max-w-xs mx-auto">
+                  <motion.button
+                    whileTap={{ scale: 0.88 }}
+                    onClick={() => adjust(-1)}
+                    disabled={count === 0}
+                    className="flex-1 h-14 rounded-2xl border-2 border-[#E5EAF0] bg-[#F7F9FC] flex items-center justify-center text-[#374151] hover:border-[#C0D0DC] hover:bg-white transition-all disabled:opacity-30 disabled:pointer-events-none text-2xl font-bold shadow-sm"
                   >
-                    {count} / {seats} occupied ({Math.round((count / seats) * 100)}%)
-                  </motion.div>
-                )}
-              </div>
-            </div>
-
-            {/* Right half — Count controls + Today's Progress */}
-            <div className="p-5">
-              <p className="text-xs font-semibold uppercase tracking-widest text-[#8CA3B0] text-center mb-4">Current Occupant Count</p>
-
-              {isLocked ? (
-                <div className="rounded-2xl border border-[#E5EAF0] bg-[#F7F9FC] p-5 text-center">
-                  <Lock size={20} className="text-[#A0B3BE] mx-auto mb-2" />
-                  <p className="text-sm font-semibold text-[#5C7A8A] mb-0.5">Max counts reached today</p>
-                  <p className="text-xs text-[#8CA3B0]">You&apos;ve counted {MAX_COUNTS_PER_DAY}× today. Come back tomorrow.</p>
-                </div>
-              ) : (
-                <>
-                  <div className="flex items-center gap-4 mb-5">
-                    <motion.button
-                      whileTap={{ scale: 0.88 }}
-                      onClick={() => adjust(-1)}
-                      disabled={count === 0}
-                      className="flex-1 h-14 rounded-2xl border-2 border-[#E5EAF0] bg-[#F7F9FC] flex items-center justify-center text-[#374151] hover:border-[#C0D0DC] hover:bg-white transition-all disabled:opacity-30 disabled:pointer-events-none text-2xl font-bold shadow-sm"
-                    >
-                      −
-                    </motion.button>
-                    <div className="flex-1 text-center">
-                      <AnimatePresence mode="popLayout">
-                        <motion.span
-                          key={count}
-                          initial={{ opacity: 0, scale: 0.75, y: -12 }}
-                          animate={{ opacity: 1, scale: 1, y: 0 }}
-                          exit={{ opacity: 0, scale: 0.7, y: 12 }}
-                          transition={{ duration: 0.2, type: "spring", stiffness: 280 }}
-                          className="text-7xl font-black text-[#0D1B2A] tabular-nums block"
-                          style={{ fontFamily: "var(--font-manrope)", fontWeight: 900 }}
-                        >
-                          {String(count).padStart(2, "0")}
-                        </motion.span>
-                      </AnimatePresence>
-                    </div>
-                    <motion.button
-                      whileTap={{ scale: 0.88 }}
-                      onClick={() => adjust(1)}
-                      className="flex-1 h-14 rounded-2xl border-2 border-primary bg-primary/5 flex items-center justify-center text-primary hover:bg-primary/10 transition-all shadow-sm"
-                    >
-                      <Plus size={24} />
-                    </motion.button>
+                    −
+                  </motion.button>
+                  <div className="flex-1 text-center">
+                    <AnimatePresence mode="popLayout">
+                      <motion.span
+                        key={count}
+                        initial={{ opacity: 0, scale: 0.75, y: -12 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.7, y: 12 }}
+                        transition={{ duration: 0.2, type: "spring", stiffness: 280 }}
+                        className="text-7xl font-black text-[#0D1B2A] tabular-nums block"
+                        style={{ fontFamily: "var(--font-manrope)", fontWeight: 900 }}
+                      >
+                        {String(count).padStart(2, "0")}
+                      </motion.span>
+                    </AnimatePresence>
                   </div>
+                  <motion.button
+                    whileTap={{ scale: 0.88 }}
+                    onClick={() => adjust(1)}
+                    className="flex-1 h-14 rounded-2xl border-2 border-primary bg-primary/5 flex items-center justify-center text-primary hover:bg-primary/10 transition-all shadow-sm"
+                  >
+                    <Plus size={24} />
+                  </motion.button>
+                </div>
 
+                <div className="flex justify-center mb-5">
                   <motion.button
                     whileTap={{ scale: 0.97 }}
                     onClick={handleRecord}
                     disabled={saving}
-                    className="w-full rounded-2xl font-semibold text-base text-white transition-all shadow-lg overflow-hidden relative mb-5"
+                    className="rounded-2xl font-semibold text-base text-white transition-all shadow-lg overflow-hidden relative px-12"
                     style={{
                       height: "52px",
                       background: saved ? "linear-gradient(135deg, #00C9A7, #10B981)" : "linear-gradient(135deg, #0A4F6E, #1A7FA8)",
@@ -680,33 +641,69 @@ function CountScreen({
                       )}
                     </AnimatePresence>
                   </motion.button>
-                </>
-              )}
+                </div>
+              </>
+            )}
 
-              {/* Today's Progress — inside right column */}
-              <div className="border-t border-[#F0F4F8] pt-4">
-                <div className="flex items-center justify-between mb-3">
-                  <p className="text-sm font-semibold text-[#0D1B2A]">Today&apos;s Progress</p>
-                  <span className="text-xs text-[#8CA3B0]">Day {dayProgress} / {TOTAL_DAYS}</span>
-                </div>
-                <div className="flex gap-2 mb-3">
-                  {Array.from({ length: MAX_COUNTS_PER_DAY }).map((_, i) => (
-                    <motion.div key={i}
-                      className={`flex-1 h-2.5 rounded-full ${i < todayCounts ? "bg-primary" : "bg-[#EEF3F8]"}`}
-                      initial={{ scaleX: 0 }} animate={{ scaleX: 1 }}
-                      transition={{ delay: i * 0.1 + 0.2, duration: 0.4 }}
-                      style={{ transformOrigin: "left" }} />
-                  ))}
-                </div>
-                <div className="h-2 rounded-full bg-[#EEF3F8] overflow-hidden">
-                  <motion.div className="h-full rounded-full" style={{ background: "linear-gradient(90deg, #1A7FA8, #00C9A7)" }}
-                    initial={{ width: 0 }} animate={{ width: `${(dayProgress / TOTAL_DAYS) * 100}%` }}
-                    transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }} />
-                </div>
-                <p className="text-[11px] text-[#A0B3BE] mt-2">Count up to {MAX_COUNTS_PER_DAY}× per day for {TOTAL_DAYS} days</p>
+            {/* Today's Progress */}
+            <div className="border-t border-[#F0F4F8] pt-4 max-w-md mx-auto">
+              <div className="flex items-center justify-between mb-3">
+                <p className="text-sm font-semibold text-[#0D1B2A]">Today&apos;s Progress</p>
+                <span className="text-xs text-[#8CA3B0]">Day {dayProgress} / {TOTAL_DAYS}</span>
+              </div>
+              <div className="flex gap-2 mb-3">
+                {Array.from({ length: MAX_COUNTS_PER_DAY }).map((_, i) => (
+                  <motion.div key={i}
+                    className={`flex-1 h-2.5 rounded-full ${i < todayCounts ? "bg-primary" : "bg-[#EEF3F8]"}`}
+                    initial={{ scaleX: 0 }} animate={{ scaleX: 1 }}
+                    transition={{ delay: i * 0.1 + 0.2, duration: 0.4 }}
+                    style={{ transformOrigin: "left" }} />
+                ))}
+              </div>
+              <div className="h-2 rounded-full bg-[#EEF3F8] overflow-hidden">
+                <motion.div className="h-full rounded-full" style={{ background: "linear-gradient(90deg, #1A7FA8, #00C9A7)" }}
+                  initial={{ width: 0 }} animate={{ width: `${(dayProgress / TOTAL_DAYS) * 100}%` }}
+                  transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }} />
+              </div>
+              <p className="text-[11px] text-[#A0B3BE] mt-2 text-center">Count up to {MAX_COUNTS_PER_DAY}× per day for {TOTAL_DAYS} days</p>
+            </div>
+          </div>
+
+          {/* Bottom section — Room visualization */}
+          <div className="p-5">
+            <div className="flex items-center justify-between mb-3">
+              <div>
+                <p className="text-sm font-semibold text-[#0D1B2A]">{roomName}</p>
+                <p className="text-xs text-[#8CA3B0] mt-0.5">Configured for {seats} seats · {catDef.label}</p>
+              </div>
+              <div className="text-3xl font-black text-[#0D1B2A] tabular-nums" style={{ fontFamily: "var(--font-manrope)" }}>
+                <AnimatePresence mode="popLayout">
+                  <motion.span
+                    key={count}
+                    initial={{ opacity: 0, scale: 0.8, y: -8 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.7, y: 8 }}
+                    transition={{ duration: 0.18, type: "spring", stiffness: 300 }}
+                    className="block"
+                  >
+                    {String(count).padStart(2, "0")}
+                  </motion.span>
+                </AnimatePresence>
               </div>
             </div>
-
+            <div className="relative h-56">
+              <DynamicRoomView category={category} seats={seats} />
+              {count > 0 && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full px-4 py-1.5 text-xs font-semibold shadow-md text-white"
+                  style={{ background: "linear-gradient(135deg, #0A4F6E, #1A7FA8)" }}
+                >
+                  {count} / {seats} occupied ({Math.round((count / seats) * 100)}%)
+                </motion.div>
+              )}
+            </div>
           </div>
         </motion.div>
 

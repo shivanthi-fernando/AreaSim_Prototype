@@ -236,7 +236,7 @@ export default function TeamPage() {
         <div className="flex items-center justify-between gap-4">
           <div>
             <h1 className="text-2xl font-extrabold text-text" style={{ fontFamily: "var(--font-manrope)" }}>
-              Team Members
+              Members
             </h1>
             <p className="text-sm text-text-muted font-body mt-0.5">
               {members.length} member{members.length !== 1 ? "s" : ""} in your workspace
@@ -246,7 +246,7 @@ export default function TeamPage() {
             onClick={() => setShowModal(true)}
             className="flex items-center gap-2 rounded-xl bg-primary hover:bg-primary-light text-white font-semibold px-4 py-2.5 text-sm font-body transition-all shadow-md shadow-primary/20 hover:-translate-y-0.5 active:scale-95"
           >
-            <UserPlus size={16} /> Add Member
+            <UserPlus size={16} /> Invite Member
           </button>
         </div>
 

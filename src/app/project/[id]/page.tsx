@@ -171,6 +171,11 @@ function FloorsTab() {
           </motion.div>
         );
       })}
+
+      {/* Add floor button */}
+      <button className="w-full flex items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-border py-4 text-sm text-text-muted hover:text-primary hover:border-primary/40 transition-all font-body">
+        <Layers size={16} /> Add Floor
+      </button>
     </div>
   );
 }
@@ -223,7 +228,7 @@ function TeamTab() {
 
       {/* Invite button */}
       <button className="w-full flex items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-border py-4 text-sm text-text-muted hover:text-primary hover:border-primary/40 transition-all font-body">
-        <UserPlus size={16} /> Invite Member
+        <UserPlus size={16} /> Add Member
       </button>
     </div>
   );

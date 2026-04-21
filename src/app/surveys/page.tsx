@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { ClipboardList, Filter, Eye } from "lucide-react";
+import { ClipboardList, Filter, Eye, Plus } from "lucide-react";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { mockSurveyRecords } from "@/lib/mockData";
 import { EmptyState } from "@/components/ui/EmptyState";
@@ -51,6 +51,9 @@ export default function SurveysPage() {
               {mockSurveyRecords.length} surveys across {projects.length} projects
             </p>
           </div>
+          <button className="flex items-center gap-2 rounded-xl bg-primary hover:bg-primary-light text-white font-semibold px-4 py-2.5 text-sm font-body transition-all shadow-md shadow-primary/20 hover:-translate-y-0.5 active:scale-95">
+            <Plus size={16} /> Create new survey
+          </button>
         </div>
 
         {/* Filter bar */}
