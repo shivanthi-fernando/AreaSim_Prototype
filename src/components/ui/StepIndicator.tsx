@@ -11,7 +11,6 @@ interface Step {
 interface StepIndicatorProps {
   steps: Step[];
   currentStep: number;
-  onStepClick?: (index: number) => void;
 }
 
 /** Multi-step wizard progress indicator with labels. */
@@ -40,18 +39,15 @@ export function StepIndicator({ steps, currentStep }: StepIndicatorProps) {
 
           return (
             <div key={index} className="flex items-center flex-1 last:flex-none">
-              <button 
-                onClick={() => onStepClick?.(index)}
-                className="flex flex-col items-center gap-1.5 group outline-none"
-              >
+              <div className="flex flex-col items-center gap-1.5">
                 <div
                   className={cn(
                     "w-9 h-9 rounded-full flex items-center justify-center text-sm font-semibold border-2 transition-all duration-300 font-body",
                     isCompleted
-                      ? "bg-accent border-accent text-white group-hover:bg-accent/80 group-hover:border-accent/80"
+                      ? "bg-accent border-accent text-white"
                       : isCurrent
                       ? "bg-primary border-primary text-white scale-110 shadow-md shadow-primary/30"
-                      : "bg-surface border-border text-text-muted group-hover:border-primary/50 group-hover:text-primary"
+                      : "bg-surface border-border text-text-muted"
                   )}
                 >
                   {isCompleted ? (
@@ -62,13 +58,13 @@ export function StepIndicator({ steps, currentStep }: StepIndicatorProps) {
                 </div>
                 <span
                   className={cn(
-                    "text-xs font-body whitespace-nowrap transition-colors",
-                    isCurrent ? "text-primary font-semibold" : "text-text-muted group-hover:text-primary"
+                    "text-xs font-body whitespace-nowrap",
+                    isCurrent ? "text-primary font-semibold" : "text-text-muted"
                   )}
                 >
                   {step.label}
                 </span>
-              </button>
+              </div>
 
               {index < steps.length - 1 && (
                 <div className="flex-1 mx-2 -mt-5">

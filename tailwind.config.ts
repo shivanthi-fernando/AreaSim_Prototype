@@ -13,7 +13,6 @@ const config: Config = {
         primary: "var(--color-primary)",
         "primary-light": "var(--color-primary-light)",
         accent: "var(--color-accent)",
-        "accent-text": "var(--color-accent-text)",
         "accent-warm": "var(--color-accent-warm)",
         bg: "var(--color-bg)",
         surface: "var(--color-surface)",

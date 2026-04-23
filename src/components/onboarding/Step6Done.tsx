@@ -73,7 +73,7 @@ export function Step6Done() {
                 : { opacity: 0, x: -16 }
             }
             transition={{ duration: 0.35, type: "spring", stiffness: 200, damping: 20 }}
-            className="flex items-center gap-3 py-1"
+            className="flex items-center gap-3 rounded-xl border border-border bg-surface p-3.5"
           >
             <motion.span
               initial={{ scale: 0 }}
@@ -102,7 +102,7 @@ export function Step6Done() {
           iconPosition="right"
           onClick={() => router.push("/project/proj-1/canvas/guide")}
         >
-          Continue
+          Continue to Guide
         </Button>
       </motion.div>
     </motion.div>

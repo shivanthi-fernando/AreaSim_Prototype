@@ -1,5 +1,4 @@
 import { Logo } from "@/components/ui/Logo";
-import { LanguageSelector } from "@/components/ui/LanguageSelector";
 
 export default function AuthLayout({
   children,
@@ -51,9 +50,7 @@ export default function AuthLayout({
           <div className="lg:hidden">
             <Logo size="sm" />
           </div>
-          <div className="ml-auto">
-            <LanguageSelector />
-          </div>
+          <div className="ml-auto" />
         </div>
         <div className="flex-1 flex items-center justify-center px-4 py-8">
           <div className="w-full max-w-md">{children}</div>

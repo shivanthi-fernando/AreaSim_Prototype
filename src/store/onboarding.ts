@@ -18,16 +18,13 @@ export interface LeaseParams {
   annualRent: string;
   commonAreaCost: string;
   targetHeadcount: number;
-  consultantsCount?: number;
-  showConsultants?: boolean;
 }
 
 export interface ProjectDetails {
   projectName: string;
-  officeAddress: string;
-  postalCode: string;
+  buildingName: string;
   category: string;
-  industry: string;
+  location: string;
 }
 
 interface OnboardingState {
@@ -56,10 +53,9 @@ interface OnboardingState {
 
 const defaultProject: ProjectDetails = {
   projectName: "",
-  officeAddress: "",
-  postalCode: "",
+  buildingName: "",
   category: "",
-  industry: "",
+  location: "",
 };
 
 const defaultLeaseParams: LeaseParams = {
@@ -67,8 +63,6 @@ const defaultLeaseParams: LeaseParams = {
   annualRent: "",
   commonAreaCost: "",
   targetHeadcount: 1,
-  consultantsCount: 0,
-  showConsultants: false,
 };
 
 export const useOnboardingStore = create<OnboardingState>()(
@@ -81,7 +75,7 @@ export const useOnboardingStore = create<OnboardingState>()(
       verificationFile: undefined,
 
       setStep: (step) => set({ currentStep: step }),
-      nextStep: () => set((s) => ({ currentStep: Math.min(s.currentStep + 1, 3) })),
+      nextStep: () => set((s) => ({ currentStep: Math.min(s.currentStep + 1, 5) })),
       prevStep: () => set((s) => ({ currentStep: Math.max(s.currentStep - 1, 0) })),
 
       setProject: (data) =>
