@@ -4,29 +4,23 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Logo } from "@/components/ui/Logo";
 import { StepIndicator } from "@/components/ui/StepIndicator";
 import { Step1Project } from "@/components/onboarding/Step1Project";
-import { Step2Floors } from "@/components/onboarding/Step2Floors";
 import { Step3Lease } from "@/components/onboarding/Step3Lease";
-import { Step4Upload } from "@/components/onboarding/Step4Upload";
-import { Step5Verify } from "@/components/onboarding/Step5Verify";
+import { Step3FloorPlans } from "@/components/onboarding/Step3FloorPlans";
 import { Step6Done } from "@/components/onboarding/Step6Done";
 import { useOnboardingStore } from "@/store/onboarding";
+import { Button } from "@/components/ui/Button";
 
 const STEPS = [
-  { label: "Project", description: "Basic project info" },
-  { label: "Floors",  description: "Add floor names" },
-  { label: "Lease",   description: "Lease parameters" },
-  { label: "Upload",  description: "Floor plans" },
-  { label: "Verify",  description: "Confirm upload" },
-  { label: "Done",    description: "What's next" },
+  { label: "Create project", description: "Tell us about your project" },
+  { label: "Add lease parameters",   description: "Add Lease parameters" },
+  { label: "Add floor plans",  description: "Add floor plans" },
 ];
 
 const stepMeta: Record<number, { title: string; subtitle: string; illuBg: string }> = {
   0: { title: "Create Your First Project",   subtitle: "Tell us about your building and location.",     illuBg: "from-blue-50 to-sky-100" },
-  1: { title: "Add Floor Names",             subtitle: "Define and order your building's floors.",       illuBg: "from-violet-50 to-purple-100" },
-  2: { title: "Lease Parameters",            subtitle: "Enter your area and cost details.",              illuBg: "from-amber-50 to-orange-100" },
-  3: { title: "Upload Floor Layout",         subtitle: "Add floor plans for AI analysis.",               illuBg: "from-teal-50 to-emerald-100" },
-  4: { title: "Verify Floor Plan",           subtitle: "Confirm the uploaded plan looks correct.",       illuBg: "from-indigo-50 to-blue-100" },
-  5: { title: "What We'll Do Next",          subtitle: "Your setup is complete.",                        illuBg: "from-green-50 to-teal-100" },
+  1: { title: "Add Lease Parameters",        subtitle: "Enter your area and cost details.",              illuBg: "from-amber-50 to-orange-100" },
+  2: { title: "Add Floor Plans",             subtitle: "Upload and verify your floor plan layouts.",    illuBg: "from-indigo-50 to-blue-100" },
+  3: { title: "Great you're all set!",       subtitle: "Your setup is complete.",                        illuBg: "from-green-50 to-teal-100" },
 };
 
 // ─── Step Illustrations ───────────────────────────────────────────────────────
@@ -57,7 +51,7 @@ function IlluStep1() {
         Aker Brygge Tower
       </motion.text>
       <motion.g initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1 }}>
-        <circle cx="150" cy="234" r="10" fill="#00C9A7" />
+        <circle cx="150" cy="234" r="10" fill="#0F7663" />
         <text x="150" y="252" textAnchor="middle" fontSize="8.5" fill="#64748B">Oslo, Norway</text>
       </motion.g>
     </svg>
@@ -124,7 +118,7 @@ function IlluStep3() {
         animate={{ width: 180 }} transition={{ delay: 0.8, duration: 1, ease: "easeOut" }} />
       <defs>
         <linearGradient id="leaseGrad" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stopColor="#1A7FA8" /><stop offset="100%" stopColor="#00C9A7" />
+          <stop offset="0%" stopColor="#1A7FA8" /><stop offset="100%" stopColor="#0F7663" />
         </linearGradient>
       </defs>
     </svg>
@@ -149,7 +143,7 @@ function IlluStep4() {
           initial={{ pathLength: 0 }} animate={{ pathLength: 1 }}
           transition={{ delay: 0.5 + i * 0.2, duration: 0.4 }} />
       ))}
-      <motion.rect x="70" y="50" width="160" height="4" rx="2" fill="#00C9A7" opacity="0.7"
+      <motion.rect x="70" y="50" width="160" height="4" rx="2" fill="#0F7663" opacity="0.7"
         animate={{ y: [50, 144, 50] }}
         transition={{ duration: 2, repeat: Infinity, ease: "linear" }} />
       <motion.g initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
@@ -250,11 +244,9 @@ function IlluStep6() {
 
 const ILLUSTRATIONS = [
   <IlluStep1 key={0} />,
-  <IlluStep2 key={1} />,
-  <IlluStep3 key={2} />,
-  <IlluStep4 key={3} />,
-  <IlluStep5 key={4} />,
-  <IlluStep6 key={5} />,
+  <IlluStep3 key={1} />, // Lease illustration for Step 2
+  null,                  // No illustration for Step 3
+  <IlluStep6 key={3} />, // Done illustration for Step 4
 ];
 
 const slideVariants = {
@@ -267,10 +259,9 @@ const slideVariants = {
 
 export default function OnboardingPage() {
   const { currentStep, nextStep, prevStep, setStep } = useOnboardingStore();
-  const isLastStep = currentStep === 5;
+  const isLastStep = currentStep === 3;
+  const isStep3 = currentStep === 2; // Add Floor Plans step
   const meta = stepMeta[currentStep];
-
-  const handleReupload = () => setStep(3);
 
   return (
     <div className="min-h-screen bg-bg flex flex-col">
@@ -282,25 +273,38 @@ export default function OnboardingPage() {
       <main className="flex-1 flex flex-col items-center px-4 py-8 sm:py-12">
         <div className="w-full max-w-5xl space-y-7">
           {/* Step indicator */}
-          {!isLastStep && <StepIndicator steps={STEPS} currentStep={currentStep} />}
+          {!isLastStep && <StepIndicator steps={STEPS} currentStep={currentStep} onStepClick={setStep} />}
 
           {/* Split card */}
           <div className="rounded-2xl border border-border bg-surface shadow-card overflow-hidden">
-            <div className={`grid grid-cols-1 ${isLastStep ? "" : "lg:grid-cols-2"}`}>
+            <div className={`grid grid-cols-1 ${isLastStep || isStep3 ? "" : "lg:grid-cols-2"}`}>
 
               {/* ── Left: form ────────────────────────────────────────── */}
-              <div className={`flex flex-col ${isLastStep ? "" : "border-b lg:border-b-0 lg:border-r border-border"}`}>
+              <div className={`flex flex-col ${isLastStep || isStep3 ? "" : "border-b lg:border-b-0 lg:border-r border-border"}`}>
                 {/* Step header */}
                 {!isLastStep && (
                   <div className="px-6 sm:px-8 pt-7 pb-5 border-b border-border">
-                    <p className="text-xs font-semibold text-text-muted font-mono uppercase tracking-widest mb-1">
-                      Step {currentStep + 1} of {STEPS.length}
-                    </p>
-                    <h1 className="text-xl sm:text-2xl font-700 text-text"
-                      style={{ fontFamily: "var(--font-manrope)", fontWeight: 700 }}>
-                      {meta.title}
-                    </h1>
-                    <p className="text-sm text-text-muted font-body mt-1">{meta.subtitle}</p>
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <p className="text-xs font-semibold text-text-muted font-mono uppercase tracking-widest mb-1">
+                          Step {currentStep + 1} of {STEPS.length}
+                        </p>
+                        <h1 className="text-xl sm:text-2xl font-700 text-text"
+                          style={{ fontFamily: "var(--font-manrope)", fontWeight: 700 }}>
+                          {meta.title}
+                        </h1>
+                        <p className="text-sm text-text-muted font-body mt-1">{meta.subtitle}</p>
+                      </div>
+                      {isStep3 && (
+                        <Button 
+                          variant="secondary" 
+                          size="lg" 
+                          className="h-10 text-xs border-primary text-primary hover:bg-primary/5"
+                        >
+                          Don’t have a floor plan
+                        </Button>
+                      )}
+                    </div>
                   </div>
                 )}
 
@@ -316,20 +320,16 @@ export default function OnboardingPage() {
                       transition={{ duration: 0.28, ease: [0.4, 0, 0.2, 1] }}
                     >
                       {currentStep === 0 && <Step1Project onNext={nextStep} />}
-                      {currentStep === 1 && <Step2Floors onNext={nextStep} onBack={prevStep} />}
-                      {currentStep === 2 && <Step3Lease onNext={nextStep} onBack={prevStep} />}
-                      {currentStep === 3 && <Step4Upload onNext={nextStep} onBack={prevStep} />}
-                      {currentStep === 4 && (
-                        <Step5Verify onNext={nextStep} onBack={prevStep} onReupload={handleReupload} />
-                      )}
-                      {currentStep === 5 && <Step6Done />}
+                      {currentStep === 1 && <Step3Lease onNext={nextStep} onBack={prevStep} />}
+                      {currentStep === 2 && <Step3FloorPlans onNext={nextStep} onBack={prevStep} />}
+                      {currentStep === 3 && <Step6Done />}
                     </motion.div>
                   </AnimatePresence>
                 </div>
               </div>
 
-              {/* ── Right: illustration (hidden on last step) ────────── */}
-              <div className={`${isLastStep ? "hidden" : "hidden lg:flex"} items-center justify-center bg-gradient-to-br ${meta.illuBg} px-8 py-10 min-h-[420px]`}>
+              {/* ── Right: illustration (hidden on last step and step 3) ────────── */}
+              <div className={`${isLastStep || isStep3 ? "hidden" : "hidden lg:flex"} items-center justify-center bg-gradient-to-br ${meta.illuBg} px-8 py-10 min-h-[420px]`}>
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={currentStep}

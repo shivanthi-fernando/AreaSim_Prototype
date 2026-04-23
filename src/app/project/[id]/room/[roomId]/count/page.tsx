@@ -311,7 +311,7 @@ function SetupScreen({
           {/* ── Full-width header ── */}
           <div className="mb-6">
             <h1 className="text-xl font-bold text-[#0D1B2A] mb-1" style={{ fontFamily: "var(--font-manrope)" }}>
-              Set Up Room for Counting
+              Set up room for counting
             </h1>
             <p className="text-2xl font-black text-primary mb-1" style={{ fontFamily: "var(--font-manrope)" }}>
               {roomName}
@@ -321,7 +321,7 @@ function SetupScreen({
 
           {/* ── Full-width Category grid ── */}
           <div className="mb-6">
-            <p className="text-xs font-semibold uppercase tracking-widest text-[#8CA3B0] mb-3">Room Category</p>
+            <p className="text-xs font-semibold tracking-widest text-[#8CA3B0] mb-3">Room category</p>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {CATEGORIES.map((cat, i) => (
                 <motion.button
@@ -363,7 +363,7 @@ function SetupScreen({
 
             {/* Left — Room Preview */}
             <div className="space-y-2">
-              <p className="text-xs font-semibold uppercase tracking-widest text-[#8CA3B0]">Room Preview</p>
+              <p className="text-xs font-semibold tracking-widest text-[#8CA3B0]">Room preview</p>
               <div className="bg-white rounded-2xl border border-[#E5EAF0] shadow-sm overflow-hidden min-h-[200px] flex flex-col">
                 <AnimatePresence mode="wait">
                   {selected ? (
@@ -404,7 +404,7 @@ function SetupScreen({
 
             {/* Right — Seat Capacity + Begin Counting */}
             <div className="space-y-4">
-              <p className="text-xs font-semibold uppercase tracking-widest text-[#8CA3B0]">Seat Capacity</p>
+              <p className="text-xs font-semibold tracking-widest text-[#8CA3B0]">Seat capacity</p>
 
               <motion.div
                 initial={{ opacity: 0, y: 8 }}
@@ -456,7 +456,7 @@ function SetupScreen({
                   boxShadow: selected ? "0 4px 20px rgba(10,79,110,0.3)" : "none",
                 }}
               >
-                Begin Counting →
+                Begin counting →
               </motion.button>
 
               {!selected && (
@@ -516,7 +516,7 @@ function CountScreen({
   const handleRecord = async () => {
     if (isLocked || saving) return;
     setSaving(true);
-    confetti({ particleCount: 70, spread: 90, origin: { y: 0.55 }, colors: ["#00C9A7", "#1A7FA8", "#60A5FA", "#A78BFA"], zIndex: 9999 });
+    confetti({ particleCount: 70, spread: 90, origin: { y: 0.55 }, colors: ["#0F7663", "#1A7FA8", "#60A5FA", "#A78BFA"], zIndex: 9999 });
     const entry = { count, by: "You", date: getToday(), time: getNow() };
     if (room && floor) addCountEntry(floor.id, room.id, entry);
     setHistory((h) => [entry, ...h]);
@@ -541,18 +541,18 @@ function CountScreen({
         <div className="max-w-5xl mx-auto flex items-center justify-between px-4 py-3.5">
           <div className="flex items-center gap-3">
             <button onClick={onBack} className="flex items-center gap-1.5 text-[#5C7A8A] hover:text-[#0D1B2A] transition-colors text-sm font-medium">
-              <ArrowLeft size={16} /> Change Setup
+              <ArrowLeft size={16} /> Change setup
             </button>
             <div className="w-px h-4 bg-[#E5EAF0]" />
             <button
               onClick={() => router.push(`/project/${projectId}/floor/${floor?.id ?? "floor-1"}`)}
               className="flex items-center gap-1.5 text-[#5C7A8A] hover:text-primary transition-colors text-sm font-medium"
             >
-              <LayoutDashboard size={15} /> Back to Canvas
+              <LayoutDashboard size={15} /> Back to canvas
             </button>
           </div>
           <div className="text-center">
-            <p className="text-[11px] uppercase tracking-widest text-[#8CA3B0]">Counting</p>
+            <p className="text-[11px] tracking-widest text-[#8CA3B0]">Counting</p>
             <p className="text-sm font-semibold text-[#0D1B2A] mt-0.5" style={{ fontFamily: "var(--font-manrope)" }}>
               {roomName}
             </p>
@@ -573,7 +573,7 @@ function CountScreen({
         >
           {/* Top section — Current Occupant Count */}
           <div className="p-5 border-b border-[#F0F4F8]">
-            <p className="text-xs font-semibold uppercase tracking-widest text-[#8CA3B0] text-center mb-4">Current Occupant Count</p>
+            <p className="text-xs font-semibold tracking-widest text-[#8CA3B0] text-center mb-4">Current occupant count</p>
 
             {isLocked ? (
               <div className="rounded-2xl border border-[#E5EAF0] bg-[#F7F9FC] p-5 text-center max-w-sm mx-auto">
@@ -624,7 +624,7 @@ function CountScreen({
                     className="rounded-2xl font-semibold text-base text-white transition-all shadow-lg overflow-hidden relative px-12"
                     style={{
                       height: "52px",
-                      background: saved ? "linear-gradient(135deg, #00C9A7, #10B981)" : "linear-gradient(135deg, #0A4F6E, #1A7FA8)",
+                      background: saved ? "linear-gradient(135deg, #0F7663, #10B981)" : "linear-gradient(135deg, #0A4F6E, #1A7FA8)",
                       boxShadow: saved ? "0 4px 24px rgba(0,201,167,0.35)" : "0 4px 20px rgba(10,79,110,0.3)",
                     }}
                   >
@@ -661,7 +661,7 @@ function CountScreen({
                 ))}
               </div>
               <div className="h-2 rounded-full bg-[#EEF3F8] overflow-hidden">
-                <motion.div className="h-full rounded-full" style={{ background: "linear-gradient(90deg, #1A7FA8, #00C9A7)" }}
+                <motion.div className="h-full rounded-full" style={{ background: "linear-gradient(90deg, #1A7FA8, #0F7663)" }}
                   initial={{ width: 0 }} animate={{ width: `${(dayProgress / TOTAL_DAYS) * 100}%` }}
                   transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }} />
               </div>

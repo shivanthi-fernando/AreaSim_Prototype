@@ -81,7 +81,7 @@ function AddMemberModal({ onClose, onAdd }: { onClose: () => void; onAdd: (m: Me
               <UserPlus size={20} className="text-white" />
             </div>
             <div>
-              <h2 className="text-lg font-extrabold text-white" style={{ fontFamily: "var(--font-manrope)" }}>Add Team Member</h2>
+              <h2 className="text-lg font-extrabold text-white" style={{ fontFamily: "var(--font-manrope)" }}>Add team member</h2>
               <p className="text-white/70 text-xs font-body">Invite colleagues to collaborate</p>
             </div>
           </div>
@@ -113,7 +113,7 @@ function AddMemberModal({ onClose, onAdd }: { onClose: () => void; onAdd: (m: Me
                 {tab === "email" ? (
                   <div className="space-y-3">
                     <div>
-                      <label className="text-xs font-semibold text-text-muted uppercase tracking-wider font-body">Email address</label>
+                      <label className="text-xs font-semibold text-text-muted tracking-wider font-body">Email address</label>
                       <div className="mt-1.5 flex items-center gap-2 rounded-xl border border-border bg-surface-2 px-3 py-2.5 focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/15 transition-all">
                         <Mail size={14} className="text-text-muted shrink-0" />
                         <input type="email" value={email} onChange={e => setEmail(e.target.value)}
@@ -122,7 +122,7 @@ function AddMemberModal({ onClose, onAdd }: { onClose: () => void; onAdd: (m: Me
                       </div>
                     </div>
                     <div>
-                      <label className="text-xs font-semibold text-text-muted uppercase tracking-wider font-body">Role</label>
+                      <label className="text-xs font-semibold text-text-muted tracking-wider font-body">Role</label>
                       <select value={role} onChange={e => setRole(e.target.value as Role)}
                         className="mt-1.5 w-full rounded-xl border border-border bg-surface-2 px-3 py-2.5 text-sm text-text font-body focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/15 transition-all">
                         {(["Observer", "Analyst", "Admin"] as Role[]).map(r => (
@@ -132,7 +132,7 @@ function AddMemberModal({ onClose, onAdd }: { onClose: () => void; onAdd: (m: Me
                     </div>
                     <button onClick={handleAdd} disabled={!email.trim()}
                       className="w-full rounded-xl bg-primary hover:bg-primary-light text-white font-semibold py-2.5 text-sm font-body transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2">
-                      <UserPlus size={15} /> Send Invite
+                      <UserPlus size={15} /> Send invite
                     </button>
                   </div>
                 ) : (
@@ -143,7 +143,7 @@ function AddMemberModal({ onClose, onAdd }: { onClose: () => void; onAdd: (m: Me
                       className="w-full rounded-xl border border-border bg-surface-2 px-3 py-2.5 text-sm text-text font-body focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/15 transition-all resize-none placeholder:text-text-muted/50" />
                     <button onClick={handleCSV} disabled={!csvText.trim()}
                       className="w-full rounded-xl bg-primary hover:bg-primary-light text-white font-semibold py-2.5 text-sm font-body transition-all disabled:opacity-40 flex items-center justify-center gap-2">
-                      <Upload size={15} /> Import &amp; Send Invites
+                      <Upload size={15} /> Import & send invites
                     </button>
                   </div>
                 )}
@@ -246,7 +246,7 @@ export default function TeamPage() {
             onClick={() => setShowModal(true)}
             className="flex items-center gap-2 rounded-xl bg-primary hover:bg-primary-light text-white font-semibold px-4 py-2.5 text-sm font-body transition-all shadow-md shadow-primary/20 hover:-translate-y-0.5 active:scale-95"
           >
-            <UserPlus size={16} /> Invite Member
+            <UserPlus size={16} /> Invite member
           </button>
         </div>
 
@@ -275,7 +275,7 @@ export default function TeamPage() {
         {/* Members table */}
         <div className="rounded-2xl border border-border bg-surface overflow-hidden">
           {/* Table header */}
-          <div className="hidden sm:grid grid-cols-[1fr_1fr_120px_100px_40px] gap-4 px-5 py-2.5 bg-surface-2 border-b border-border text-[11px] font-semibold text-text-muted uppercase tracking-wider font-body">
+          <div className="hidden sm:grid grid-cols-[1fr_1fr_120px_100px_40px] gap-4 px-5 py-2.5 bg-surface-2 border-b border-border text-[11px] font-semibold text-text-muted tracking-wider font-body">
             <span>Member</span>
             <span>Email</span>
             <span>Role</span>

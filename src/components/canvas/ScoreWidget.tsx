@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Building, Package, ClipboardList } from "lucide-react";
 import { useCanvasStore } from "@/store/canvas";
+import { formatNumber } from "@/lib/utils";
 
 function AnimatedNumber({ value }: { value: number }) {
   const [displayed, setDisplayed] = useState(value);
@@ -23,7 +24,7 @@ function AnimatedNumber({ value }: { value: number }) {
     requestAnimationFrame(tick);
     prev.current = value;
   }, [value]);
-  return <span>{displayed}</span>;
+  return <span>{formatNumber(displayed)}</span>;
 }
 
 function BlueprintAccent() {
@@ -58,29 +59,29 @@ const STAT_CONFIG = [
   {
     icon:       <Building size={12} />,
     label:      "Rooms",
-    color:      "#1A7FA8",
-    glow:       "rgba(26,127,168,0.35)",
-    iconColor:  "#1A7FA8",
-    labelColor: "#1A7FA8",
-    bg:         "#1A7FA8",
+    color:      "var(--color-accent)",
+    glow:       "rgba(0,201,167,0.35)",
+    iconColor:  "var(--color-accent)",
+    labelColor: "var(--color-accent-text)",
+    bg:         "var(--color-accent)",
   },
   {
     icon:       <Package size={12} />,
     label:      "Zones",
-    color:      "#1A7FA8",
-    glow:       "rgba(26,127,168,0.35)",
-    iconColor:  "#1A7FA8",
-    labelColor: "#1A7FA8",
-    bg:         "#1A7FA8",
+    color:      "var(--color-accent)",
+    glow:       "rgba(0,201,167,0.35)",
+    iconColor:  "var(--color-accent)",
+    labelColor: "var(--color-accent-text)",
+    bg:         "var(--color-accent)",
   },
   {
     icon:       <ClipboardList size={12} />,
     label:      "Survey",
-    color:      "#1A7FA8",
-    glow:       "rgba(26,127,168,0.35)",
-    iconColor:  "#1A7FA8",
-    labelColor: "#1A7FA8",
-    bg:         "#1A7FA8",
+    color:      "var(--color-accent)",
+    glow:       "rgba(0,201,167,0.35)",
+    iconColor:  "var(--color-accent)",
+    labelColor: "var(--color-accent-text)",
+    bg:         "var(--color-accent)",
   },
 ];
 
@@ -107,9 +108,8 @@ export function ScoreWidget() {
     <motion.div
       initial={{ opacity: 0, y: -8 }}
       animate={{ opacity: 1, y: 0 }}
-      className="relative flex items-stretch rounded-xl border border-[#E5EAF0] bg-white/90 backdrop-blur-sm shadow-md overflow-hidden"
+      className="relative flex items-stretch rounded-xl border border-[#E5EAF0] bg-white shadow-lg overflow-hidden"
     >
-      <BlueprintAccent />
 
       {STAT_CONFIG.map(({ icon, label, bg, glow, iconColor, labelColor }, i) => {
         const isRooms = i === 0;
@@ -165,7 +165,7 @@ export function ScoreWidget() {
             {/* Icon + label stacked */}
             <div className="flex flex-col items-center gap-0.5">
               <span style={{ color: iconColor, opacity: 0.85 }}>{icon}</span>
-              <span className="text-[9px] font-body uppercase tracking-widest leading-none whitespace-nowrap font-semibold"
+              <span className="text-[9px] font-body leading-none whitespace-nowrap font-medium"
                 style={{ color: labelColor, opacity: 0.7 }}>
                 {label}
               </span>

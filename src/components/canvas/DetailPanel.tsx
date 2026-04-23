@@ -6,9 +6,13 @@ import {
   X, Plus, CheckCircle2, Loader2, Circle,
   Pencil, ChevronRight, Sparkles,
 } from "lucide-react";
+import { Button } from "@/components/ui/Button";
 import { useCanvasStore } from "@/store/canvas";
 import { useRouter, useParams } from "next/navigation";
 import { mockProject } from "@/lib/mockData";
+import { IllustrationDrawRoom } from "@/app/project/[id]/canvas/guide/page";
+import { Logo } from "@/components/ui/Logo";
+import { cn } from "@/lib/utils";
 import type { Room } from "@/lib/mockData";
 
 interface DetailPanelProps {
@@ -16,8 +20,8 @@ interface DetailPanelProps {
 }
 
 const STATUS_ICON: Record<string, React.ReactNode> = {
-  counted:   <CheckCircle2 size={13} className="text-accent shrink-0" />,
-  counting:  <Loader2 size={13} className="text-amber-500 shrink-0 animate-spin" />,
+  counted: <CheckCircle2 size={13} className="text-accent shrink-0" />,
+  counting: <Loader2 size={13} className="text-amber-500 shrink-0 animate-spin" />,
   unvisited: <Circle size={13} className="text-[#C8D8E4] shrink-0" />,
 };
 
@@ -29,10 +33,11 @@ export function DetailPanel({ floorId: _initialFloorId }: DetailPanelProps) {
   const {
     detailPanelOpen, setDetailPanel,
     floors, getRoomsForFloor, getZonesForFloor, getDetectedRooms,
-    addFloor, addRoom,
+    addFloor, addRoom, setTool,
   } = useCanvasStore();
 
   const [activeTab, setActiveTab] = useState(_initialFloorId);
+  const [showVerifyModal, setShowVerifyModal] = useState(false);
 
   const floor = floors.find((f) => f.id === activeTab) ?? floors[0];
   const rooms = getRoomsForFloor(floor?.id ?? "");
@@ -79,6 +84,8 @@ export function DetailPanel({ floorId: _initialFloorId }: DetailPanelProps) {
       status: "unvisited",
       countHistory: [],
       currentCount: 0,
+      sqm: 0,
+      verified: false,
     };
     addRoom(floor.id, stubRoom);
     router.push(`/project/${projectId}/room/${drId}/count`);
@@ -95,13 +102,12 @@ export function DetailPanel({ floorId: _initialFloorId }: DetailPanelProps) {
       className="absolute right-0 top-0 h-full bg-surface flex flex-col border-l border-[#E5EAF0] overflow-hidden shadow-2xl z-40"
       style={{ width: "33.333%", minWidth: "280px", maxWidth: "460px" }}
     >
-      {/* ── Header ───────────────────────────────────────────────── */}
-      <div className="flex items-center justify-between px-4 py-3.5 border-b border-[#E5EAF0] shrink-0">
+      <div className="flex items-center justify-between px-4 py-3.5 border-b border-[#E5EAF0] shrink-0 bg-surface">
         <div>
-          <p className="text-[10px] text-[#8CA3B0] uppercase tracking-wider font-body mb-0.5">Project</p>
+          <p className="text-[10px] text-[#8CA3B0] tracking-wider font-body mb-0.5">Floor</p>
           <h2 className="text-sm font-bold text-[#0D1B2A] font-display leading-tight"
             style={{ fontFamily: "var(--font-manrope)" }}>
-            {mockProject.buildingName}
+            {floor?.name ?? "Select Floor"}
           </h2>
         </div>
         <button
@@ -112,30 +118,6 @@ export function DetailPanel({ floorId: _initialFloorId }: DetailPanelProps) {
         </button>
       </div>
 
-      {/* ── Floor Tabs ────────────────────────────────────────────── */}
-      <div className="border-b border-[#E5EAF0] px-3 pt-3 pb-0 shrink-0">
-        <div className="flex items-center gap-0 overflow-x-auto scrollbar-none">
-          {floors.map((f) => (
-            <button
-              key={f.id}
-              onClick={() => setActiveTab(f.id)}
-              className={`shrink-0 px-3 py-2 text-xs font-semibold font-body border-b-2 transition-all whitespace-nowrap ${
-                activeTab === f.id
-                  ? "border-primary text-primary"
-                  : "border-transparent text-[#8CA3B0] hover:text-[#374151]"
-              }`}
-            >
-              {f.name}
-            </button>
-          ))}
-          <button
-            onClick={handleAddFloor}
-            className="shrink-0 ml-1 flex items-center gap-1 px-2.5 py-2 text-xs font-medium text-[#8CA3B0] hover:text-primary rounded-lg hover:bg-[#F0F6FB] transition-all border border-dashed border-[#D0DDE6] mb-2 whitespace-nowrap"
-          >
-            <Plus size={11} /> Add floor
-          </button>
-        </div>
-      </div>
 
       {/* ── Scrollable Body ───────────────────────────────────────── */}
       <div className="flex-1 overflow-y-auto">
@@ -143,114 +125,58 @@ export function DetailPanel({ floorId: _initialFloorId }: DetailPanelProps) {
         {/* Mapped Rooms and Zones section */}
         {(zones.length > 0 || rooms.length > 0) && (
           <div className="px-4 pt-4 pb-2">
-            <p className="text-[11px] text-[#8CA3B0] font-body mb-3 uppercase tracking-wider">Mapped Rooms &amp; Zones</p>
+            <div className="flex items-center justify-between mb-3">
+              <p className="text-[11px] text-[#0D1B2A] font-bold font-body tracking-wider uppercase">Rooms</p>
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => router.push(`/project/${projectId}/floor/${floor.id}/count`)}
+                className="border-primary text-primary hover:bg-primary/5 h-8 text-[14px] font-bold"
+              >
+                Start room counting
+              </Button>
+            </div>
 
             <div className="space-y-2">
-              {zones.map((zone) => {
-                const zoneRooms = rooms.filter((r) => zone.roomIds.includes(r.id));
-                return (
-                  <div key={zone.id} className="rounded-xl border border-[#E5EAF0] overflow-hidden">
-                    <div className="flex items-center justify-between px-3 py-2.5 bg-white">
-                      <div className="flex items-center gap-2 min-w-0">
-                        <div className="w-2.5 h-2.5 rounded-sm shrink-0" style={{ background: zone.color }} />
-                        <span className="text-xs font-bold text-[#0D1B2A] truncate">{zone.name}</span>
-                        {zone.category && (
-                          <>
-                            <ChevronRight size={10} className="text-[#C0D0DC] shrink-0" />
-                            <span className="text-xs text-[#8CA3B0] truncate">{zone.category}</span>
-                          </>
-                        )}
-                      </div>
-                      <button className="w-6 h-6 rounded-md bg-[#F7F9FC] flex items-center justify-center text-[#8CA3B0] hover:text-primary transition-colors shrink-0">
-                        <Pencil size={11} />
-                      </button>
-                    </div>
-                    <div className="border-t border-[#F0F4F8]">
-                      {zoneRooms.map((room) => (
-                        <RoomRow
-                          key={room.id}
-                          name={room.name}
-                          status={room.status}
-                          count={room.currentCount}
-                          onCount={() => router.push(`/project/${projectId}/room/${room.id}/count`)}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                );
-              })}
-
-              {unzonedRooms.length > 0 && zones.length > 0 && (
-                <div className="rounded-xl border border-[#E5EAF0] overflow-hidden">
-                  <div className="px-3 py-2.5 bg-white border-b border-[#F0F4F8]">
-                    <span className="text-xs font-bold text-[#0D1B2A]">Other Rooms</span>
-                  </div>
-                  {unzonedRooms.map((room) => (
-                    <RoomRow
-                      key={room.id}
-                      name={room.name}
-                      status={room.status}
-                      count={room.currentCount}
-                      onCount={() => router.push(`/project/${projectId}/room/${room.id}/count`)}
-                    />
-                  ))}
-                </div>
-              )}
-
-              {zones.length === 0 && rooms.length > 0 && (
-                <div className="rounded-xl border border-[#E5EAF0] overflow-hidden">
-                  {rooms.map((room) => (
-                    <RoomRow
-                      key={room.id}
-                      name={room.name}
-                      status={room.status}
-                      count={room.currentCount}
-                      onCount={() => router.push(`/project/${projectId}/room/${room.id}/count`)}
-                    />
-                  ))}
-                </div>
-              )}
+              <div className="rounded-xl border border-[#E5EAF0] overflow-hidden">
+                {rooms.map((room) => (
+                  <RoomRow
+                    key={room.id}
+                    room={room}
+                    onUpdate={(data) => {
+                      if (data.verified) {
+                        setShowVerifyModal(true);
+                        setTool("pen");
+                      } else {
+                        useCanvasStore.getState().updateRoom(floor.id, room.id, data);
+                      }
+                    }}
+                  />
+                ))}
+              </div>
             </div>
+
+            {/* Add Room button right below the list */}
+            <button
+              onClick={() => {
+                const newRoom: Room = {
+                  id: `room-${Date.now()}`,
+                  name: "New Room",
+                  points: [],
+                  status: "unvisited",
+                  countHistory: [],
+                  currentCount: 0,
+                  sqm: 0,
+                };
+                addRoom(floor.id, newRoom);
+              }}
+              className="mt-3 w-full flex items-center justify-center gap-2 rounded-xl border border-dashed border-[#D0DDE6] py-2.5 text-xs text-[#8CA3B0] hover:border-primary hover:text-primary hover:bg-[#F0F6FB] transition-all font-body"
+            >
+              <Plus size={14} /> Add room
+            </button>
           </div>
         )}
 
-        {/* Divider */}
-        {(zones.length > 0 || rooms.length > 0) && pendingDetected.length > 0 && (
-          <div className="h-px bg-[#F0F4F8] mx-4 my-2" />
-        )}
-
-        {/* AI-Detected rooms */}
-        {pendingDetected.length > 0 && (
-          <div className="px-4 pt-3 pb-3">
-            <div className="flex items-center gap-1.5 mb-2">
-              <Sparkles size={12} className="text-accent" />
-              <p className="text-[11px] text-[#8CA3B0] font-body uppercase tracking-wider">
-                AI-Identified Rooms
-                <span className="ml-1.5 text-[10px] bg-accent/10 text-accent px-1.5 py-0.5 rounded-full font-semibold normal-case tracking-normal">
-                  {pendingDetected.length} unverified
-                </span>
-              </p>
-            </div>
-            <p className="text-[10px] text-[#A0B3BE] mb-2 font-body">Counting is allowed without drawing. Draw to verify.</p>
-            <div className="rounded-xl border border-[#E5EAF0] overflow-hidden">
-              {pendingDetected.map((dr) => (
-                <div key={dr.id}
-                  className="flex items-center justify-between px-3 py-2.5 border-b border-[#F0F4F8] last:border-0 bg-white hover:bg-[#F7F9FC] transition-colors">
-                  <div className="flex items-center gap-2 min-w-0">
-                    <div className="w-2 h-2 rounded-full border-2 border-dashed border-[#C0D0DC] shrink-0" />
-                    <span className="text-xs text-[#374151] font-body truncate">{dr.name}</span>
-                  </div>
-                  <button
-                    onClick={() => handleCountDetected(dr.id, dr.name)}
-                    className="shrink-0 px-2 py-1 rounded-lg text-[10px] font-semibold bg-[#F0F6FB] text-[#5C7A8A] hover:bg-primary hover:text-white transition-all"
-                  >
-                    Count
-                  </button>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
 
         {/* Verified rooms info */}
         {matchedRooms.length > 0 && (
@@ -277,77 +203,114 @@ export function DetailPanel({ floorId: _initialFloorId }: DetailPanelProps) {
         <div className="h-16" />
       </div>
 
-      {/* ── Footer ────────────────────────────────────────────────── */}
-      <div className="shrink-0 px-4 py-3 border-t border-[#E5EAF0] bg-white">
-        <button className="w-full flex items-center justify-center gap-2 rounded-xl border border-dashed border-[#D0DDE6] py-2.5 text-sm text-[#8CA3B0] hover:border-primary hover:text-primary hover:bg-[#F0F6FB] transition-all font-body">
-          <Plus size={14} /> Add new zone
-        </button>
-      </div>
+
+      {/* Verification Guidance Modal */}
+      <AnimatePresence>
+        {showVerifyModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0A1929]/60 backdrop-blur-sm">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="bg-white rounded-3xl border border-[#E2E8F0] shadow-2xl overflow-hidden max-w-md w-full"
+            >
+              <div className="flex items-center justify-between px-5 py-3 border-b border-[#E5EAF0]">
+                <Logo size="sm" />
+                <button onClick={() => setShowVerifyModal(false)} className="text-[#5C7A8A] hover:text-[#0D1B2A]">
+                  <X size={18} />
+                </button>
+              </div>
+              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-b border-[#D0DDE6] h-44 flex items-center justify-center p-6">
+                <IllustrationDrawRoom />
+              </div>
+              <div className="p-6">
+                <h3 className="text-lg font-bold text-[#0D1B2A] mb-2" style={{ fontFamily: "var(--font-manrope)" }}>Verify with Draw Room tool</h3>
+                <p className="text-sm text-[#5C7A8A] font-body leading-relaxed mb-6">
+                  To verify this room on the floor plan, pick the <span className="font-bold text-primary">Draw room</span> tool from the toolbar and trace the relevant room boundaries.
+                </p>
+                <Button className="w-full h-11 rounded-xl" onClick={() => setShowVerifyModal(false)}>
+                  Got it, I&apos;ll draw it
+                </Button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </motion.aside>
   );
 }
 
 // ─── Room row component ───────────────────────────────────────────────────────
 function RoomRow({
-  name,
-  status,
-  count,
-  onCount,
+  room,
+  onUpdate,
 }: {
-  name: string;
-  status: "unvisited" | "counting" | "counted";
-  count: number;
-  onCount: () => void;
+  room: Room;
+  onUpdate: (data: Partial<Room>) => void;
 }) {
   const [expanded, setExpanded] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [tempName, setTempName] = useState(room.name);
 
-  // Deterministic mock stats based on name hash
-  const hash = name.split("").reduce((acc, c) => acc + c.charCodeAt(0), 0);
-  const roomTypes = ["Meeting Room", "Open Office", "Break Room", "Focus Room", "Reception", "Storage"];
-  const roomType = roomTypes[hash % roomTypes.length];
-  const seats = 2 + (hash % 12);
-  const todayCount = 1 + (hash % 4);
-  const totalCount = todayCount + (hash % 10) + 2;
-  const avgCapacity = Math.round(seats * (0.5 + (hash % 4) * 0.1));
+  const handleRename = () => {
+    if (tempName.trim()) {
+      onUpdate({ name: tempName.trim() });
+    }
+    setIsEditing(false);
+  };
 
   return (
     <div className="border-b border-[#F0F4F8] last:border-0 bg-white hover:bg-[#F7F9FC] transition-colors">
       <div className="flex items-center justify-between px-3 py-2.5 group">
-        <button
-          onClick={() => status === "counted" && setExpanded(!expanded)}
-          className="flex items-center gap-2 min-w-0 flex-1 text-left"
-        >
-          {STATUS_ICON[status]}
-          <span className="text-xs text-[#374151] font-body truncate">{name}</span>
-          {status === "counted" && (
-            <span className="text-[10px] font-mono font-bold text-accent ml-1"
-              style={{ fontFamily: "var(--font-jetbrains-mono)" }}>
-              {count}
-            </span>
-          )}
-          {status === "counted" && (
-            <ChevronRight
-              size={11}
-              className={`text-[#C0D0DC] ml-auto mr-1 transition-transform shrink-0 ${expanded ? "rotate-90" : ""}`}
+        <div className="flex items-center gap-2 min-w-0 flex-1">
+          {STATUS_ICON[room.status]}
+          {isEditing ? (
+            <input
+              autoFocus
+              value={tempName}
+              onChange={(e) => setTempName(e.target.value)}
+              onBlur={handleRename}
+              onKeyDown={(e) => e.key === "Enter" && handleRename()}
+              className="text-xs text-[#374151] font-body bg-[#F0F6FB] border border-primary/20 rounded px-1 outline-none w-full"
             />
+          ) : (
+            <div className="flex items-center gap-1 min-w-0 flex-1 text-left">
+              <span className="text-xs text-[#374151] font-bold font-body truncate">{room.name}</span>
+            </div>
           )}
-        </button>
-        <button
-          onClick={onCount}
-          title="Start counting"
-          className={`shrink-0 px-2 py-1 rounded-lg text-[10px] font-semibold transition-all ${
-            status === "counted"
-              ? "bg-accent/10 text-accent"
-              : "bg-[#F0F6FB] text-[#5C7A8A] hover:bg-primary hover:text-white"
-          }`}
-        >
-          {status === "counted" ? "Recount" : "Count"}
-        </button>
+        </div>
+
+        <div className={cn(
+          "flex items-center gap-1 transition-opacity",
+          room.verified ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+        )}>
+          {room.verified ? (
+            <div className="flex items-center gap-1 px-2 py-1 rounded-lg bg-accent/10 text-accent-text text-[10px] font-bold">
+              <CheckCircle2 size={11} /> Verified
+            </div>
+          ) : (
+            <>
+              <button
+                onClick={() => isEditing ? handleRename() : setIsEditing(true)}
+                className="flex items-center gap-1 px-2 py-1.5 rounded-lg text-primary hover:bg-primary/5 transition-all text-[10px] font-bold"
+              >
+                <Pencil size={11} /> Edit
+              </button>
+              
+              <button
+                onClick={() => onUpdate({ verified: true })}
+                className="flex items-center gap-1 px-2 py-1.5 rounded-lg text-accent hover:bg-accent/5 transition-all text-[10px] font-bold"
+              >
+                <CheckCircle2 size={11} /> Verify
+              </button>
+            </>
+          )}
+        </div>
       </div>
 
       {/* Stats card — shown when counted and expanded */}
       <AnimatePresence>
-        {status === "counted" && expanded && (
+        {room.status === "counted" && expanded && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
@@ -355,46 +318,54 @@ function RoomRow({
             transition={{ duration: 0.2, ease: "easeInOut" }}
             className="overflow-hidden"
           >
-            <div className="mx-3 mb-2.5 rounded-xl bg-[#F0F6FB] border border-[#DAEAF5] p-3 space-y-2">
-              {/* Room type */}
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] text-[#8CA3B0] font-body">Type</span>
-                <span className="text-[10px] font-semibold text-[#0D1B2A] bg-[#DBEAFE] text-primary px-2 py-0.5 rounded-full font-body">{roomType}</span>
-              </div>
-              {/* Seats */}
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] text-[#8CA3B0] font-body">Seats</span>
-                <span className="text-[10px] font-bold text-[#374151] font-mono" style={{ fontFamily: "var(--font-jetbrains-mono)" }}>{seats}</span>
-              </div>
-              {/* Count divider */}
-              <div className="h-px bg-[#DAEAF5]" />
-              {/* Today / total counts */}
-              <div className="grid grid-cols-2 gap-2">
-                <div className="rounded-lg bg-white border border-[#E5EAF0] p-2 text-center">
-                  <p className="text-[13px] font-extrabold text-[#1A7FA8]" style={{ fontFamily: "var(--font-jetbrains-mono)" }}>{todayCount}×</p>
-                  <p className="text-[9px] text-[#8CA3B0] font-body">Today</p>
-                </div>
-                <div className="rounded-lg bg-white border border-[#E5EAF0] p-2 text-center">
-                  <p className="text-[13px] font-extrabold text-[#0A4F6E]" style={{ fontFamily: "var(--font-jetbrains-mono)" }}>{totalCount}×</p>
-                  <p className="text-[9px] text-[#8CA3B0] font-body">Overall</p>
-                </div>
-              </div>
-              {/* Avg capacity */}
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] text-[#8CA3B0] font-body">Avg capacity</span>
-                <div className="flex items-center gap-1.5">
-                  <div className="w-20 h-1.5 rounded-full bg-[#E5EAF0] overflow-hidden">
-                    <motion.div
-                      className="h-full rounded-full bg-gradient-to-r from-[#1A7FA8] to-[#00C9A7]"
-                      initial={{ width: 0 }}
-                      animate={{ width: `${Math.round((avgCapacity / seats) * 100)}%` }}
-                      transition={{ delay: 0.1, duration: 0.5, ease: "easeOut" }}
-                    />
+            {(() => {
+              // Deterministic mock stats based on name hash
+              const hash = room.name.split("").reduce((acc, c) => acc + c.charCodeAt(0), 0);
+              const roomTypes = ["Meeting Room", "Open Office", "Break Room", "Focus Room", "Reception", "Storage"];
+              const roomType = roomTypes[hash % roomTypes.length];
+              const seats = 2 + (hash % 12);
+              const todayCount = 1 + (hash % 4);
+              const totalCount = todayCount + (hash % 10) + 2;
+              const avgCapacity = Math.round(seats * (0.5 + (hash % 4) * 0.1));
+
+              return (
+                <div className="mx-3 mb-2.5 rounded-xl bg-[#F0F6FB] border border-[#DAEAF5] p-3 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] text-[#8CA3B0] font-body">Type</span>
+                    <span className="text-[10px] font-semibold text-[#0D1B2A] bg-[#DBEAFE] text-primary px-2 py-0.5 rounded-full font-body">{roomType}</span>
                   </div>
-                  <span className="text-[10px] font-bold text-[#374151] font-mono" style={{ fontFamily: "var(--font-jetbrains-mono)" }}>{avgCapacity}</span>
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] text-[#8CA3B0] font-body">Seats</span>
+                    <span className="text-[10px] font-bold text-[#374151] font-mono" style={{ fontFamily: "var(--font-jetbrains-mono)" }}>{seats}</span>
+                  </div>
+                  <div className="h-px bg-[#DAEAF5]" />
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="rounded-lg bg-white border border-[#E5EAF0] p-2 text-center">
+                      <p className="text-[13px] font-extrabold text-[#1A7FA8]" style={{ fontFamily: "var(--font-jetbrains-mono)" }}>{formatNumber(todayCount)}×</p>
+                      <p className="text-[9px] text-[#8CA3B0] font-body">Today</p>
+                    </div>
+                    <div className="rounded-lg bg-white border border-[#E5EAF0] p-2 text-center">
+                      <p className="text-[13px] font-extrabold text-[#0A4F6E]" style={{ fontFamily: "var(--font-jetbrains-mono)" }}>{formatNumber(totalCount)}×</p>
+                      <p className="text-[9px] text-[#8CA3B0] font-body">Overall</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] text-[#8CA3B0] font-body">Avg capacity</span>
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-20 h-1.5 rounded-full bg-[#E5EAF0] overflow-hidden">
+                        <motion.div
+                          className="h-full rounded-full bg-gradient-to-r from-[#1A7FA8] to-[#00C9A7]"
+                          initial={{ width: 0 }}
+                          animate={{ width: `${Math.round((avgCapacity / seats) * 100)}%` }}
+                          transition={{ delay: 0.1, duration: 0.5, ease: "easeOut" }}
+                        />
+                      </div>
+                      <span className="text-[10px] font-bold text-[#374151] font-mono" style={{ fontFamily: "var(--font-jetbrains-mono)" }}>{formatNumber(avgCapacity)}</span>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
+              );
+            })()}
           </motion.div>
         )}
       </AnimatePresence>

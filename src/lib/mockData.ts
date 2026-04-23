@@ -13,7 +13,10 @@ export interface Room {
   status: "unvisited" | "counting" | "counted";
   countHistory: CountEntry[];
   currentCount: number;
-  area?: number;
+  sqm: number;
+  category?: string;
+  seats?: number;
+  verified?: boolean;
 }
 
 export interface Zone {
@@ -37,7 +40,8 @@ export interface Floor {
 export interface DetectedRoom {
   id: string;
   name: string;
-  verified: boolean; // true when user has drawn + matched a polygon for it
+  verified: boolean;
+  sqm: number;
 }
 
 export interface Project {
@@ -77,30 +81,30 @@ export const mockSurveys = [
 ];
 
 const GROUND_DETECTED: DetectedRoom[] = [
-  { id: "d-1", name: "Conference Room A",   verified: false },
-  { id: "d-2", name: "Conference Room B",   verified: false },
-  { id: "d-3", name: "Open Office",         verified: false },
-  { id: "d-4", name: "Break Room",          verified: false },
-  { id: "d-5", name: "Reception",           verified: false },
-  { id: "d-6", name: "Storage Room",        verified: false },
-  { id: "d-7", name: "Focus Zone",          verified: false },
-  { id: "d-8", name: "Server Room",         verified: false },
+  { id: "d-1", name: "Conference Room A",   verified: false, sqm: 45 },
+  { id: "d-2", name: "Conference Room B",   verified: false, sqm: 32 },
+  { id: "d-3", name: "Open Office",         verified: false, sqm: 120 },
+  { id: "d-4", name: "Break Room",          verified: false, sqm: 28 },
+  { id: "d-5", name: "Reception",           verified: false, sqm: 18 },
+  { id: "d-6", name: "Storage Room",        verified: false, sqm: 12 },
+  { id: "d-7", name: "Focus Zone",          verified: false, sqm: 8 },
+  { id: "d-8", name: "Server Room",         verified: false, sqm: 15 },
 ];
 
 const FLOOR1_DETECTED: DetectedRoom[] = [
-  { id: "d1-1", name: "Staff Training Room",    verified: false },
-  { id: "d1-2", name: "Medical Workshop Room",  verified: false },
-  { id: "d1-3", name: "Simulation Lab",         verified: false },
-  { id: "d1-4", name: "Orientation Room",       verified: false },
-  { id: "d1-5", name: "Breakout Area",          verified: false },
-  { id: "d1-6", name: "Instructor Office",      verified: false },
+  { id: "d1-1", name: "Staff Training Room",    verified: false, sqm: 65 },
+  { id: "d1-2", name: "Medical Workshop Room",  verified: false, sqm: 55 },
+  { id: "d1-3", name: "Simulation Lab",         verified: false, sqm: 80 },
+  { id: "d1-4", name: "Orientation Room",       verified: false, sqm: 40 },
+  { id: "d1-5", name: "Breakout Area",          verified: false, sqm: 35 },
+  { id: "d1-6", name: "Instructor Office",      verified: false, sqm: 20 },
 ];
 
 const FLOOR2_DETECTED: DetectedRoom[] = [
-  { id: "d2-1", name: "Executive Boardroom",    verified: false },
-  { id: "d2-2", name: "HR Office",              verified: false },
-  { id: "d2-3", name: "Finance Suite",          verified: false },
-  { id: "d2-4", name: "Quiet Library",          verified: false },
+  { id: "d2-1", name: "Executive Boardroom",    verified: false, sqm: 50 },
+  { id: "d2-2", name: "HR Office",              verified: false, sqm: 25 },
+  { id: "d2-3", name: "Finance Suite",          verified: false, sqm: 45 },
+  { id: "d2-4", name: "Quiet Library",          verified: false, sqm: 60 },
 ];
 
 export const mockProject: Project = {
@@ -113,8 +117,23 @@ export const mockProject: Project = {
       name: "Ground Floor",
       level: "Ground",
       imageUrl: "/mock/floorplan-oslo.svg",
-      rooms: [],
-      zones: [],
+      rooms: [
+        { id: "r1", name: "Conference Room A", points: [], status: "unvisited", countHistory: [], currentCount: 0, sqm: 45, verified: false },
+        { id: "r2", name: "Conference Room B", points: [], status: "unvisited", countHistory: [], currentCount: 0, sqm: 32, verified: false },
+        { id: "r3", name: "Open Office Area",   points: [], status: "unvisited", countHistory: [], currentCount: 0, sqm: 120, verified: false },
+        { id: "r4", name: "Break Room",          points: [], status: "unvisited", countHistory: [], currentCount: 0, sqm: 28, verified: false },
+        { id: "r5", name: "Reception Lobby",     points: [], status: "unvisited", countHistory: [], currentCount: 0, sqm: 18, verified: false },
+        { id: "r6", name: "Focus Zone 1",       points: [], status: "unvisited", countHistory: [], currentCount: 0, sqm: 12, verified: false },
+        { id: "r7", name: "Focus Zone 2",       points: [], status: "unvisited", countHistory: [], currentCount: 0, sqm: 12, verified: false },
+        { id: "r8", name: "Collaboration Hub",  points: [], status: "unvisited", countHistory: [], currentCount: 0, sqm: 40, verified: false },
+        { id: "r9", name: "Storage Room",        points: [], status: "unvisited", countHistory: [], currentCount: 0, sqm: 15, verified: false },
+        { id: "r10", name: "Server Room",        points: [], status: "unvisited", countHistory: [], currentCount: 0, sqm: 10, verified: false },
+        { id: "r11", name: "Quiet Room",         points: [], status: "unvisited", countHistory: [], currentCount: 0, sqm: 14, verified: false },
+      ],
+      zones: [
+        { id: "z1", name: "Meeting Zone", roomIds: ["r1", "r2"], color: "#6366F1", category: "Focus" },
+        { id: "z2", name: "Work Zone",    roomIds: ["r3"], color: "#F59E0B", category: "Open" },
+      ],
       detectedRooms: GROUND_DETECTED,
     },
     {
@@ -122,7 +141,18 @@ export const mockProject: Project = {
       name: "1st Floor",
       level: "1st",
       imageUrl: "/mock/floorplan-oslo.svg",
-      rooms: [],
+      rooms: [
+        { id: "r1-1", name: "Staff Training Room",   points: [], status: "unvisited", countHistory: [], currentCount: 0, sqm: 65, verified: false },
+        { id: "r1-2", name: "Simulation Lab",        points: [], status: "unvisited", countHistory: [], currentCount: 0, sqm: 80, verified: false },
+        { id: "r1-3", name: "Workshop A",            points: [], status: "unvisited", countHistory: [], currentCount: 0, sqm: 45, verified: false },
+        { id: "r1-4", name: "Workshop B",            points: [], status: "unvisited", countHistory: [], currentCount: 0, sqm: 45, verified: false },
+        { id: "r1-5", name: "Instructor Office",     points: [], status: "unvisited", countHistory: [], currentCount: 0, sqm: 22, verified: false },
+        { id: "r1-6", name: "Equipment Storage",     points: [], status: "unvisited", countHistory: [], currentCount: 0, sqm: 30, verified: false },
+        { id: "r1-7", name: "Pantry",                points: [], status: "unvisited", countHistory: [], currentCount: 0, sqm: 15, verified: false },
+        { id: "r1-8", name: "Focus Pod 1",           points: [], status: "unvisited", countHistory: [], currentCount: 0, sqm: 8, verified: false },
+        { id: "r1-9", name: "Focus Pod 2",           points: [], status: "unvisited", countHistory: [], currentCount: 0, sqm: 8, verified: false },
+        { id: "r1-10", name: "Focus Pod 3",          points: [], status: "unvisited", countHistory: [], currentCount: 0, sqm: 8, verified: false },
+      ],
       zones: [],
       detectedRooms: FLOOR1_DETECTED,
     },

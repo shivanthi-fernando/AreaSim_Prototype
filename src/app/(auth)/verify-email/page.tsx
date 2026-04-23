@@ -94,7 +94,7 @@ export default function VerifyEmailPage() {
 
       <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
         <Button className="w-full" size="lg" onClick={() => handleVerify()} loading={verifying}>
-          Verify Email
+          Verify email
         </Button>
       </motion.div>
 

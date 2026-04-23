@@ -22,11 +22,11 @@ function DefaultIllustration() {
       <defs>
         <linearGradient id="grad1" x1="8" y1="8" x2="112" y2="112" gradientUnits="userSpaceOnUse">
           <stop stopColor="#0A4F6E" />
-          <stop offset="1" stopColor="#00C9A7" />
+          <stop offset="1" stopColor="#0F7663" />
         </linearGradient>
         <linearGradient id="grad2" x1="8" y1="8" x2="112" y2="112" gradientUnits="userSpaceOnUse">
           <stop stopColor="#0A4F6E" />
-          <stop offset="1" stopColor="#00C9A7" />
+          <stop offset="1" stopColor="#0F7663" />
         </linearGradient>
       </defs>
     </svg>

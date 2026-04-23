@@ -12,9 +12,10 @@ import { ArrowRight } from "lucide-react";
 
 const schema = z.object({
   projectName: z.string().min(2, "Project name is required"),
-  buildingName: z.string().min(1, "Building name is required"),
+  officeAddress: z.string().min(1, "Office address is required"),
+  postalCode: z.string().min(1, "Postal code is required"),
   category: z.string().min(1, "Please select a category"),
-  location: z.string().min(1, "Location is required"),
+  industry: z.string().min(1, "Please select an industry"),
 });
 
 type FormValues = z.infer<typeof schema>;
@@ -25,6 +26,15 @@ const categories = [
   { value: "retail", label: "Retail" },
   { value: "healthcare", label: "Healthcare" },
   { value: "education", label: "Education" },
+  { value: "other", label: "Other" },
+];
+
+const industries = [
+  { value: "technology", label: "Technology" },
+  { value: "finance", label: "Finance & Banking" },
+  { value: "creative", label: "Creative & Media" },
+  { value: "manufacturing", label: "Manufacturing" },
+  { value: "services", label: "Professional Services" },
   { value: "other", label: "Other" },
 ];
 
@@ -43,9 +53,10 @@ export function Step1Project({ onNext }: Props) {
     resolver: zodResolver(schema),
     defaultValues: {
       projectName: project.projectName || "",
-      buildingName: project.buildingName || "",
+      officeAddress: project.officeAddress || "",
+      postalCode: project.postalCode || "",
       category: project.category || "",
-      location: project.location || "",
+      industry: project.industry || "",
     },
   });
 
@@ -73,8 +84,8 @@ export function Step1Project({ onNext }: Props) {
     >
       <motion.div variants={item}>
         <Input
-          label="Project Name"
-          placeholder="Oslo HQ Optimisation"
+          label="Project name"
+          placeholder="Oslo HQ optimisation"
           error={errors.projectName?.message}
           {...register("projectName")}
         />
@@ -82,16 +93,25 @@ export function Step1Project({ onNext }: Props) {
 
       <motion.div variants={item}>
         <Input
-          label="Building Name"
-          placeholder="Aker Brygge Tower"
-          error={errors.buildingName?.message}
-          {...register("buildingName")}
+          label="Office address"
+          placeholder="Aker Brygge Tower, Oslo"
+          error={errors.officeAddress?.message}
+          {...register("officeAddress")}
+        />
+      </motion.div>
+
+      <motion.div variants={item}>
+        <Input
+          label="Postal code"
+          placeholder="0123"
+          error={errors.postalCode?.message}
+          {...register("postalCode")}
         />
       </motion.div>
 
       <motion.div variants={item}>
         <Select
-          label="Building Category"
+          label="Building category"
           options={categories}
           placeholder="Select a category…"
           error={errors.category?.message}
@@ -100,11 +120,12 @@ export function Step1Project({ onNext }: Props) {
       </motion.div>
 
       <motion.div variants={item}>
-        <Input
-          label="Location"
-          placeholder="e.g. Oslo, Norway"
-          error={errors.location?.message}
-          {...register("location")}
+        <Select
+          label="Industry"
+          options={industries}
+          placeholder="Select an industry…"
+          error={errors.industry?.message}
+          {...register("industry")}
         />
       </motion.div>
 

@@ -18,11 +18,11 @@ const rules = [
 
 function getStrength(p: string) {
   const score = rules.filter((r) => r.test(p)).length;
-  if (score <= 1) return { pct: 20, label: "Very Weak", color: "bg-red-500" };
+  if (score <= 1) return { pct: 20, label: "Very weak", color: "bg-red-500" };
   if (score === 2) return { pct: 40, label: "Weak", color: "bg-orange-500" };
   if (score === 3) return { pct: 60, label: "Fair", color: "bg-amber-500" };
   if (score === 4) return { pct: 80, label: "Strong", color: "bg-emerald-500" };
-  return { pct: 100, label: "Very Strong", color: "bg-accent" };
+  return { pct: 100, label: "Very strong", color: "bg-accent" };
 }
 
 export default function CreatePasswordPage() {
@@ -95,7 +95,7 @@ export default function CreatePasswordPage() {
 
         {/* Confirm */}
         <div className="flex flex-col gap-1.5">
-          <label className="text-sm font-medium text-text font-body">Confirm Password</label>
+          <label className="text-sm font-medium text-text font-body">Confirm password</label>
           <div className="relative">
             <Lock size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none" />
             <input type={showCf ? "text" : "password"} placeholder="Confirm your password" value={confirm}
@@ -108,7 +108,7 @@ export default function CreatePasswordPage() {
           </div>
         </div>
 
-        <Button type="submit" className="w-full" size="lg" loading={loading}>Create Account</Button>
+        <Button type="submit" className="w-full" size="lg" loading={loading}>Create account</Button>
       </form>
     </motion.div>
   );

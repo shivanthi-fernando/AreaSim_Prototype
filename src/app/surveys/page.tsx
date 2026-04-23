@@ -84,7 +84,7 @@ export default function SurveysPage() {
               onChange={(e) => setProjectFilter(e.target.value)}
               className="text-xs font-body text-text bg-surface border border-border rounded-lg px-2 py-1.5 focus:outline-none focus:border-primary cursor-pointer"
             >
-              <option value="all">All Projects</option>
+              <option value="all">All projects</option>
               {projects.map((p) => (
                 <option key={p} value={p}>{p}</option>
               ))}
@@ -101,7 +101,7 @@ export default function SurveysPage() {
         ) : (
           <div className="rounded-2xl border border-border bg-surface overflow-hidden">
             {/* Table header */}
-            <div className="grid grid-cols-[2fr_1.5fr_1fr_80px_120px_80px_auto] gap-4 px-5 py-3 border-b border-border bg-surface-2 text-xs font-semibold text-text-muted uppercase tracking-wider font-body">
+            <div className="grid grid-cols-[2fr_1.5fr_1fr_80px_120px_80px_auto] gap-4 px-5 py-3 border-b border-border bg-surface-2 text-xs font-semibold text-text-muted tracking-wider font-body">
               <span>Survey Name</span>
               <span className="hidden md:block">Project / Floor</span>
               <span className="hidden lg:block">Sent To</span>

@@ -6,6 +6,7 @@ import { ChevronDown, CheckCircle2, SlidersHorizontal, ClipboardList, Gem, User 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { Logo } from "@/components/ui/Logo";
+import { LanguageSelector } from "@/components/ui/LanguageSelector";
 import { Button } from "@/components/ui/Button";
 import { ScoreWidget } from "@/components/canvas/ScoreWidget";
 import { DetailPanel } from "@/components/canvas/DetailPanel";
@@ -94,17 +95,17 @@ export default function FloorPage() {
           </AnimatePresence>
         </div>
 
-        <div className="ml-auto flex items-center gap-2">
-          <ScoreWidget />
+        <div className="absolute left-1/2 -translate-x-1/2 py-2" />
 
+        <div className="ml-auto flex items-center gap-2">
           <Button
-            variant="secondary"
+            variant="primary"
             size="sm"
             icon={<SlidersHorizontal size={14} />}
             onClick={() => setDetailPanel(!detailPanelOpen)}
-            className="border-primary text-primary hover:bg-primary/5"
+            className="h-10 py-2 px-4"
           >
-            <span className="hidden sm:inline">Detailed View</span>
+            <span className="hidden sm:inline">Rooms list</span>
           </Button>
 
           <Button
@@ -112,7 +113,7 @@ export default function FloorPage() {
             size="sm"
             icon={<ClipboardList size={14} />}
             onClick={() => setSurveyModal(true)}
-            className="border-primary text-primary hover:bg-primary/5"
+            className="border-primary text-primary hover:bg-primary/5 h-10 py-2 px-4"
           >
             <span className="hidden sm:inline">Conduct Survey</span>
           </Button>
@@ -132,6 +133,8 @@ export default function FloorPage() {
             </button>
           )}
 
+          <LanguageSelector />
+
           {/* User avatar */}
           <button
             onClick={() => router.push("/settings")}
@@ -146,7 +149,12 @@ export default function FloorPage() {
       {/* ── Main Area ── */}
       <div className="flex-1 overflow-hidden relative">
         {/* Canvas always full width */}
-        <div className="w-full h-full flex flex-col">
+        <div className="w-full h-full flex flex-col relative">
+          {/* Floating ScoreWidget */}
+          <div className="absolute top-4 left-4 z-40">
+            <ScoreWidget />
+          </div>
+
           <FloorCanvas
             floorId={floorId}
             imageUrl={activeFloor?.imageUrl ?? "/mock/floorplan-oslo.svg"}

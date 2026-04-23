@@ -14,5 +14,5 @@ export function formatCurrency(value: number, currency = "NOK") {
 }
 
 export function formatNumber(value: number) {
-  return new Intl.NumberFormat("nb-NO").format(value);
+  return new Intl.NumberFormat("en-US").format(value);
 }

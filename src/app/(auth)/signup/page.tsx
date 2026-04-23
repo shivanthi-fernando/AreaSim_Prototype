@@ -52,7 +52,7 @@ export default function SignUpPage() {
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <motion.div variants={itemVariants}>
-          <Input label="Full Name" placeholder="Ingrid Larsen" icon={<User size={16} />}
+          <Input label="Full name" placeholder="Ingrid Larsen" icon={<User size={16} />}
             value={values.fullName} onChange={handleChange("fullName")} />
         </motion.div>
         <motion.div variants={itemVariants}>
@@ -60,13 +60,13 @@ export default function SignUpPage() {
             value={values.company} onChange={handleChange("company")} />
         </motion.div>
         <motion.div variants={itemVariants}>
-          <Input label="Work Email" type="email" placeholder="ingrid@company.no" icon={<Mail size={16} />}
+          <Input label="Work email" type="email" placeholder="ingrid@company.no" icon={<Mail size={16} />}
             value={values.email} onChange={handleChange("email")} />
         </motion.div>
         <motion.div variants={itemVariants}>
           <Button type="submit" className="w-full" size="lg" loading={loading}
             icon={<ArrowRight size={16} />} iconPosition="right">
-            Continue with Email
+            Continue with email
           </Button>
         </motion.div>
       </form>

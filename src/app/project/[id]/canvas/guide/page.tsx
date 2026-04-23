@@ -50,7 +50,7 @@ function IllustrationWelcome() {
   );
 }
 
-function IllustrationDrawRoom() {
+export function IllustrationDrawRoom() {
   const points = [
     { x: 80, y: 130 }, { x: 80, y: 50 }, { x: 200, y: 50 }, { x: 240, y: 90 }, { x: 240, y: 130 },
   ];
@@ -143,10 +143,10 @@ function IllustrationGroupZones() {
         transition={{ duration: 2, delay: 0.5, repeat: Infinity, repeatDelay: 1 }} />
       <text x="223" y="97" textAnchor="middle" fontSize="10" fill="#374151" fontWeight="600">Conference B</text>
       <motion.rect x="35" y="22" width="250" height="136" rx="10"
-        stroke="#00C9A7" strokeWidth="2" strokeDasharray="8 5" fill="transparent"
+        stroke="#0F7663" strokeWidth="2" strokeDasharray="8 5" fill="transparent"
         initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 1 }}
         transition={{ delay: 0.9, duration: 0.8, repeat: Infinity, repeatDelay: 2 }} />
-      <motion.rect x="100" y="14" width="120" height="18" rx="9" fill="#00C9A7"
+      <motion.rect x="100" y="14" width="120" height="18" rx="9" fill="#0F7663"
         initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 1.6, duration: 0.3, type: "spring", repeat: Infinity, repeatDelay: 2 }}
         style={{ transformOrigin: "160px 23px" }} />

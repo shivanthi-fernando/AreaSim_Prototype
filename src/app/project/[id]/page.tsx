@@ -31,7 +31,7 @@ function StatCard({ icon, label, value, sub, color }: {
         {icon}
       </div>
       <div>
-        <p className="text-xs text-text-muted font-body uppercase tracking-wider">{label}</p>
+        <p className="text-xs text-text-muted font-body tracking-wider">{label}</p>
         <p className="text-2xl font-extrabold text-text" style={{ fontFamily: "var(--font-manrope)" }}>{value}</p>
         {sub && <p className="text-xs text-text-muted font-body">{sub}</p>}
       </div>
@@ -57,14 +57,14 @@ function OverviewTab() {
       {/* Building summary */}
       <div className="rounded-2xl border border-border bg-surface p-5">
         <h3 className="text-sm font-bold text-text mb-4" style={{ fontFamily: "var(--font-manrope)" }}>
-          Building Summary
+          Building summary
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {[
-            { label: "Building Name",    value: mockProject.buildingName },
-            { label: "Project Name",     value: mockProject.name },
-            { label: "Total Floors",     value: `${mockProject.floors.length} floors` },
-            { label: "Project Status",   value: "Active" },
+            { label: "Building name",    value: mockProject.buildingName },
+            { label: "Project name",     value: mockProject.name },
+            { label: "Total floors",     value: `${mockProject.floors.length} floors` },
+            { label: "Project status",   value: "Active" },
           ].map((item) => (
             <div key={item.label} className="flex items-center justify-between py-2 border-b border-border last:border-0">
               <span className="text-xs text-text-muted font-body">{item.label}</span>
@@ -78,7 +78,7 @@ function OverviewTab() {
       <div className="rounded-2xl border border-border bg-surface p-5">
         <div className="flex items-center gap-2 mb-4">
           <h3 className="text-sm font-bold text-text" style={{ fontFamily: "var(--font-manrope)" }}>
-            Lease Parameters
+            Lease parameters
           </h3>
           <span className="flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-amber-500/10 text-amber-600">
             <Gem size={10} /> Premium
@@ -86,12 +86,12 @@ function OverviewTab() {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {[
-            { label: "Lease Start",    value: "Jan 1, 2023" },
-            { label: "Lease End",      value: "Dec 31, 2026" },
-            { label: "Monthly Rent",   value: "NOK 148,500" },
+            { label: "Lease start",    value: "Jan 1, 2023" },
+            { label: "Lease end",      value: "Dec 31, 2026" },
+            { label: "Monthly rent",   value: "Nok 148,500" },
             { label: "Area (sqm)",     value: "3,200 m²" },
-            { label: "Cost per sqm",   value: "NOK 46.4" },
-            { label: "Lease Type",     value: "Full Service" },
+            { label: "Cost per sqm",   value: "Nok 46.4" },
+            { label: "Lease type",     value: "Full service" },
           ].map((item) => (
             <div key={item.label} className="bg-surface-2 rounded-xl p-3">
               <p className="text-[11px] text-text-muted font-body mb-1">{item.label}</p>
@@ -142,7 +142,7 @@ function FloorsTab() {
                 </div>
                 <div className="flex items-center gap-3 text-xs text-text-muted font-body mb-2">
                   <span>{floor.rooms.length} rooms drawn</span>
-                  <span>{floor.detectedRooms?.length ?? 0} AI-detected</span>
+                  <span>{floor.detectedRooms?.length ?? 0} Ai-detected</span>
                   <span>{floor.zones.length} zones</span>
                 </div>
 
@@ -165,7 +165,7 @@ function FloorsTab() {
                 onClick={() => router.push(`/project/${projectId}/floor/${floor.id}`)}
                 className="shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-xl bg-primary text-white text-xs font-semibold font-body hover:bg-primary-light transition-colors"
               >
-                Open Canvas <ArrowRight size={12} />
+                Open canvas <ArrowRight size={12} />
               </button>
             </div>
           </motion.div>
@@ -174,7 +174,7 @@ function FloorsTab() {
 
       {/* Add floor button */}
       <button className="w-full flex items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-border py-4 text-sm text-text-muted hover:text-primary hover:border-primary/40 transition-all font-body">
-        <Layers size={16} /> Add Floor
+        <Layers size={16} /> Add floor
       </button>
     </div>
   );
@@ -193,7 +193,7 @@ function TeamTab() {
       <EmptyState
         title="No team members yet"
         subtitle="Invite colleagues to collaborate on this project. They can view floors, count rooms, and conduct surveys."
-        ctaLabel="Invite Member"
+        ctaLabel="Invite member"
         onCta={() => {}}
       />
     );
@@ -228,7 +228,7 @@ function TeamTab() {
 
       {/* Invite button */}
       <button className="w-full flex items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-border py-4 text-sm text-text-muted hover:text-primary hover:border-primary/40 transition-all font-body">
-        <UserPlus size={16} /> Add Member
+        <UserPlus size={16} /> Add member
       </button>
     </div>
   );

@@ -179,7 +179,7 @@ function AreaSimCanvasIllustration() {
 
       {/* Small sparkles around the canvas */}
       {[{ x: 14, y: 18 }, { x: 204, y: 174 }, { x: 204, y: 18 }].map((pt, i) => (
-        <motion.text key={i} x={pt.x} y={pt.y} textAnchor="middle" fontSize="9" fill="#00C9A7"
+        <motion.text key={i} x={pt.x} y={pt.y} textAnchor="middle" fontSize="9" fill="#0F7663"
           animate={{ opacity: [0.2, 1, 0.2], scale: [0.6, 1.3, 0.6] }}
           transition={{ duration: 2 + i * 0.4, repeat: Infinity, delay: 1.1 + i * 0.3 }}
           style={{ transformOrigin: `${pt.x}px ${pt.y}px` }}
@@ -330,7 +330,7 @@ export default function WelcomePage() {
             ].map((style, i) => (
               <motion.span
                 key={i}
-                className="absolute text-[#00C9A7] text-base select-none pointer-events-none"
+                className="absolute text-[#0F7663] text-base select-none pointer-events-none"
                 style={style as React.CSSProperties}
                 animate={{ opacity: [0.3, 1, 0.3], scale: [0.7, 1.3, 0.7] }}
                 transition={{ duration: 2, repeat: Infinity, delay: style.delay as number }}

@@ -8,6 +8,7 @@
   --color-primary: #0A4F6E;
   --color-primary-light: #1A7FA8;
   --color-accent: #00C9A7;
+  --color-accent-text: #0F7663;
   --color-accent-warm: #FF6B6B;
   --color-bg: #F7F9FC;
   --color-surface: #FFFFFF;
@@ -54,6 +55,7 @@
   --color-primary: #1A7FA8;
   --color-primary-light: #2BA8D8;
   --color-accent: #00C9A7;
+  --color-accent-text: #0F7663;
   --color-accent-warm: #FF6B6B;
   --color-bg: #080F17;
   --color-surface: #0D1B2A;

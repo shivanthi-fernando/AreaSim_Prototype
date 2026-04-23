@@ -47,7 +47,7 @@ function StatCard({ icon, label, value, suffix = "", gradient, delay }: {
         <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center mb-4", gradient, "opacity-90")}>
           {icon}
         </div>
-        <p className="text-xs text-text-muted font-body uppercase tracking-wider mb-1">{label}</p>
+        <p className="text-xs text-text-muted font-body tracking-wider mb-1">{label}</p>
         <p className="text-3xl font-extrabold text-text tabular-nums" style={{ fontFamily: "var(--font-manrope)" }}>
           {count}{suffix}
         </p>
@@ -179,7 +179,7 @@ function InviteModal({ onClose }: { onClose: () => void }) {
               </motion.div>
             ) : (
               <motion.div className="space-y-3">
-                <p className="text-xs font-semibold text-text-muted uppercase tracking-wider font-body mb-3 flex items-center gap-1.5">
+                <p className="text-xs font-semibold text-text-muted tracking-wider font-body mb-3 flex items-center gap-1.5">
                   <Users size={12} /> Email addresses
                 </p>
                 {emails.map((email, i) => (
@@ -221,13 +221,13 @@ function InviteModal({ onClose }: { onClose: () => void }) {
                     onClick={onClose}
                     className="flex-1 py-2.5 rounded-xl border border-border text-sm font-semibold text-text-muted hover:text-text hover:border-border/60 transition-all font-body"
                   >
-                    Maybe Later
+                    Maybe later
                   </button>
                   <button
                     onClick={handleSend}
                     className="flex-1 py-2.5 rounded-xl bg-primary text-white text-sm font-bold hover:bg-primary-light transition-colors shadow-md shadow-primary/20 flex items-center justify-center gap-2 font-body"
                   >
-                    <UserPlus size={14} /> Send Invites
+                    <UserPlus size={14} /> Send invites
                   </button>
                 </div>
               </motion.div>
@@ -252,10 +252,10 @@ export default function DashboardPage() {
   }, []);
 
   const stats = [
-    { icon: <FolderOpen size={20} className="text-white" />, label: "Total Projects",     value: mockDashboardStats.totalProjects,     suffix: "",  gradient: "bg-gradient-to-br from-primary to-primary-light", delay: 0 },
-    { icon: <Building2 size={20} className="text-white" />,  label: "Rooms Mapped",       value: mockDashboardStats.totalRooms,         suffix: "",  gradient: "bg-gradient-to-br from-accent to-emerald-400",    delay: 1 },
-    { icon: <TrendingUp size={20} className="text-white" />, label: "Avg. Utilisation",   value: mockDashboardStats.avgUtilisation,     suffix: "%", gradient: "bg-gradient-to-br from-amber-400 to-orange-500",  delay: 2 },
-    { icon: <ClipboardCheck size={20} className="text-white" />, label: "Survey Responses", value: mockDashboardStats.surveysCompleted, suffix: "",  gradient: "bg-gradient-to-br from-purple-500 to-indigo-500", delay: 3 },
+    { icon: <FolderOpen size={20} className="text-white" />, label: "Total projects",     value: mockDashboardStats.totalProjects,     suffix: "",  gradient: "bg-gradient-to-br from-primary to-primary-light", delay: 0 },
+    { icon: <Building2 size={20} className="text-white" />,  label: "Rooms mapped",       value: mockDashboardStats.totalRooms,         suffix: "",  gradient: "bg-gradient-to-br from-accent to-emerald-400",    delay: 1 },
+    { icon: <TrendingUp size={20} className="text-white" />, label: "Avg. utilisation",   value: mockDashboardStats.avgUtilisation,     suffix: "%", gradient: "bg-gradient-to-br from-amber-400 to-orange-500",  delay: 2 },
+    { icon: <ClipboardCheck size={20} className="text-white" />, label: "Survey responses", value: mockDashboardStats.surveysCompleted, suffix: "",  gradient: "bg-gradient-to-br from-purple-500 to-indigo-500", delay: 3 },
   ];
 
   return (
@@ -293,7 +293,7 @@ export default function DashboardPage() {
                 onClick={() => router.push("/project")}
                 className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/20 hover:bg-white/30 text-white text-sm font-semibold transition-colors backdrop-blur-sm"
               >
-                View Projects <ArrowRight size={14} />
+                View projects <ArrowRight size={14} />
               </button>
             </div>
           </div>
@@ -366,7 +366,7 @@ export default function DashboardPage() {
                 onClick={() => router.push("/project")}
                 className="w-full rounded-2xl border-2 border-dashed border-border hover:border-primary/40 py-4 flex items-center justify-center gap-2 text-sm text-text-muted hover:text-primary transition-all font-body"
               >
-                <Plus size={16} /> New Project
+                <Plus size={16} /> New project
               </motion.button>
             </div>
           </div>

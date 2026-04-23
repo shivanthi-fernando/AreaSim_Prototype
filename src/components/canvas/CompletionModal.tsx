@@ -71,7 +71,7 @@ export function CompletionModal() {
               initial={{ scale: 0.5, rotate: -15 }}
               animate={{ scale: 1, rotate: 0 }}
               transition={{ type: "spring", stiffness: 200, damping: 12, delay: 0.1 }}
-              className="w-16 h-16 rounded-2xl bg-gradient-to-br from-accent to-emerald-400 flex items-center justify-center shadow-lg shadow-accent/25 mx-auto mb-5"
+              className="w-16 h-16 rounded-2xl bg-gradient-to-br from-accent to-[#00C9A7] flex items-center justify-center shadow-lg shadow-accent/25 mx-auto mb-5"
             >
               <Sparkles size={30} className="text-white" />
             </motion.div>

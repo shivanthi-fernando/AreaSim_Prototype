@@ -35,7 +35,7 @@ const FAQ = [
 // ─── Confetti ─────────────────────────────────────────────────────────────────
 function Confetti() {
   const items = Array.from({ length: 20 }, (_, i) => i);
-  const colors = ["#0A4F6E", "#00C9A7", "#F59E0B", "#6366F1", "#EC4899"];
+  const colors = ["#0A4F6E", "#0F7663", "#F59E0B", "#6366F1", "#EC4899"];
   return (
     <div className="fixed inset-0 pointer-events-none z-50">
       {items.map((i) => (
@@ -107,7 +107,7 @@ function UpgradeModal({ onClose }: { onClose: () => void }) {
                   onClick={() => setStep("payment")}
                   className="w-full py-3 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold text-sm shadow-lg shadow-amber-500/30 hover:opacity-90 transition-opacity"
                 >
-                  Proceed to Payment
+                  Proceed to payment
                 </button>
               </div>
             )}
@@ -116,7 +116,7 @@ function UpgradeModal({ onClose }: { onClose: () => void }) {
               <div className="space-y-4">
                 <div className="space-y-3">
                   <div>
-                    <label className="text-xs text-text-muted font-body block mb-1.5">Cardholder Name</label>
+                    <label className="text-xs text-text-muted font-body block mb-1.5">Cardholder name</label>
                     <input
                       type="text"
                       placeholder="Ingrid Hansen"
@@ -124,7 +124,7 @@ function UpgradeModal({ onClose }: { onClose: () => void }) {
                     />
                   </div>
                   <div>
-                    <label className="text-xs text-text-muted font-body block mb-1.5">Card Number</label>
+                    <label className="text-xs text-text-muted font-body block mb-1.5">Card number</label>
                     <div className="relative">
                       <CreditCard size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none" />
                       <input
@@ -149,7 +149,7 @@ function UpgradeModal({ onClose }: { onClose: () => void }) {
                   onClick={handlePay}
                   className="w-full py-3 rounded-xl bg-gradient-to-r from-primary to-accent text-white font-bold text-sm shadow-lg shadow-primary/25 hover:opacity-90 transition-opacity"
                 >
-                  Pay NOK 2,499
+                  Pay Nok 2,499
                 </button>
                 <p className="text-xs text-text-muted text-center font-body">Secured by Stripe · Mock payment form</p>
               </div>
@@ -170,7 +170,7 @@ function UpgradeModal({ onClose }: { onClose: () => void }) {
                   <p className="text-sm text-text-muted font-body mt-1">All premium features are now unlocked.</p>
                 </div>
                 <button onClick={onClose} className="w-full py-3 rounded-xl bg-primary text-white font-bold text-sm hover:bg-primary-light transition-colors">
-                  Start Exploring
+                  Start exploring
                 </button>
               </div>
             )}
@@ -232,7 +232,7 @@ export default function SubscriptionPage() {
               <span className="text-xl">🆓</span>
             </div>
             <div>
-              <p className="text-xs text-text-muted font-body uppercase tracking-wider mb-0.5">Current Plan</p>
+              <p className="text-xs text-text-muted font-body tracking-wider mb-0.5">Current plan</p>
               <p className="text-xl font-extrabold text-text" style={{ fontFamily: "var(--font-manrope)" }}>Starter</p>
               <p className="text-sm text-text-muted font-body">Free forever · 1 project · 3 floors</p>
             </div>
@@ -241,7 +241,7 @@ export default function SubscriptionPage() {
             onClick={() => setUpgradeOpen(true)}
             className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-white text-sm font-bold shadow-lg shadow-amber-500/25 hover:opacity-90 transition-opacity whitespace-nowrap"
           >
-            <Gem size={14} /> Upgrade Now
+            <Gem size={14} /> Upgrade now
           </button>
         </motion.div>
 
@@ -306,7 +306,7 @@ export default function SubscriptionPage() {
               onClick={() => setUpgradeOpen(true)}
               className="w-full py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-white text-sm font-bold shadow-lg shadow-amber-500/25 hover:opacity-90 transition-opacity"
             >
-              Upgrade Now
+              Upgrade now
             </button>
           </motion.div>
         </div>
@@ -314,7 +314,7 @@ export default function SubscriptionPage() {
         {/* FAQ */}
         <div>
           <h2 className="text-base font-bold text-text mb-4" style={{ fontFamily: "var(--font-manrope)" }}>
-            Frequently Asked Questions
+            Frequently asked questions
           </h2>
           <div className="rounded-2xl border border-border bg-surface overflow-hidden">
             {FAQ.map((item) => (

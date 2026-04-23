@@ -8,6 +8,7 @@ import {
   LayoutDashboard, FolderOpen, ClipboardList, Users,
   Bell, Search, Settings, CreditCard, HelpCircle, LogOut, ChevronDown,
 } from "lucide-react";
+import { LanguageSelector } from "@/components/ui/LanguageSelector";
 import { Logo } from "@/components/ui/Logo";
 import { mockUser } from "@/lib/mockData";
 import { cn } from "@/lib/utils";
@@ -77,6 +78,9 @@ export function AppLayout({ children }: AppLayoutProps) {
 
         {/* Right side actions */}
         <div className="ml-auto flex items-center gap-1.5">
+          {/* Language selector */}
+          <LanguageSelector />
+
           {/* Global search */}
           <div className="relative">
             <AnimatePresence mode="wait">

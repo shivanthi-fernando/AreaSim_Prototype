@@ -53,7 +53,7 @@ export function Logo({ size = "md", showText = true, className }: LogoProps) {
           )}
           style={{ fontFamily: "var(--font-manrope)", fontWeight: 700 }}
         >
-          Area<span style={{ color: "var(--color-accent)" }}>Sim</span>
+          Area<span style={{ color: "var(--color-accent-text)" }}>Sim</span>
         </span>
       )}
     </div>

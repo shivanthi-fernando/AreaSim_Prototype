@@ -296,7 +296,7 @@ export function FloorCanvas({ floorId, imageUrl, onOpenGuide }: FloorCanvasProps
                     text={room.name}
                     align="center"
                     fontSize={11}
-                    fill={isSelected ? "#00C9A7" : "#0A4F6E"}
+                    fill={isSelected ? "#0F7663" : "#0A4F6E"}
                     fontFamily="var(--font-manrope)"
                     fontStyle="600"
                     listening={false}
@@ -308,7 +308,7 @@ export function FloorCanvas({ floorId, imageUrl, onOpenGuide }: FloorCanvasProps
                       text={`${room.currentCount}`}
                       align="center"
                       fontSize={13}
-                      fill="#00C9A7"
+                      fill="#0F7663"
                       fontFamily="var(--font-jetbrains-mono)"
                       fontStyle="bold"
                       listening={false}
@@ -370,7 +370,7 @@ export function FloorCanvas({ floorId, imageUrl, onOpenGuide }: FloorCanvasProps
                     x={drawPoints[i * 2]}
                     y={drawPoints[i * 2 + 1]}
                     radius={i === 0 ? 6 : 4}
-                    fill={i === 0 ? "#00C9A7" : "#0A4F6E"}
+                    fill={i === 0 ? "#0F7663" : "#0A4F6E"}
                     stroke="white"
                     strokeWidth={1.5}
                     listening={false}
@@ -396,10 +396,6 @@ export function FloorCanvas({ floorId, imageUrl, onOpenGuide }: FloorCanvasProps
                   room={pendingRoom}
                   floorId={floorId}
                   onClose={() => setPendingRoom(null)}
-                  onViewDetails={() => {
-                    setPendingRoom(null);
-                    setDetailPanel(true);
-                  }}
                 />
               </div>
             </div>
